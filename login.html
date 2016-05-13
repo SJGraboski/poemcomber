@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+		<meta charset="utf-8">
+		<style>
+			body {background-color:blue;}
+			a {background-color:yellow;}
+			#mainbody {background-color:blue;margin:50px;}
+			.col {border-color:black;background-color:blue;}
+			div {text-align: center;vertical-align: middle;}
+			.btn-info{margin:20px;}
+			.btn-lg{width:200px;}
+			.full-width{width:100%;height:100%;background-color: blue;}
+			.gray{background-color: gray;margin:0px;}
+			p{width:100%;}
+			.container-fluid{padding:0px;background-color: gray;}
+		</style>
+</head>
+<body>
+
+	<div class="container">
+		<!-- header and links -->
+		<div class="col col-lg-12">
+			<div style="float:left;background-color:gray;">
+				<h1>PoemComb</h1>
+			</div>
+			<div style="float:right;">
+				<a href="http://www.google.com/">Overview</a>
+				<a href="http://www.google.com/">Assignment</a>
+				<a href="http://www.google.com/">Comments</a>
+				<a href="http://www.google.com/">Logout</a>
+			</div>
+		</div>
+		<!-- clears the floats from previous column -->
+		<div style="clear:both;"></div>
+		<!-- mainbody -->
+		<div class="col col-lg-12">
+			<div id="mainbody">
+			<div class="jumbotron"><h3>Welcome to</h3><h1>PoemComb</h1></div>
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="login"><h3>Login</h3></button>
+				<br>
+				<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" id="register">Register</button>
+
+				<!-- <div class="col col-lg-8">asdf</div>
+				<div class="col col-lg-4">asdf</div> -->
+			</div>
+		</div>
+	</div>
+
+
+		<div class="container-fluid">
+			<div class="col col-lg-12 gray">
+				<h3>What is PoemComb?</h3>
+				<p>Poemcomb is...something something something something something something something something something something something something something something something something something something something something something something something something something </p>
+			</div>
+		</div>
+
+	
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-content">
+		<!-- submission form -->
+		<h2>Login </h2>		
+  		<form>
+	    	<div class="form-group">
+	       		<label for="user name">User Name</label>
+	        	<input type="text" class="form-control" id="name" placeholder="">
+	        </div>
+
+	        <div class="form-group">
+	        	<label for="Password">Password</label>
+	        	<input type="password" class="form-control" id="password" placeholder="">
+	        </div>
+
+	        <button type="submit" class="btn btn-default" id ="submit">Submit</button>
+		</form>
+
+      </div>
+		<!-- submission form ends -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>
