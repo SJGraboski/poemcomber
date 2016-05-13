@@ -17,10 +17,10 @@ var source = {
 
 	jawsDB: {
 		port: 3306,
-		host: 'insert remote db here',
-		user: 'insert user here',
-		password: 'insert password here',
-		database: 'insert database here'
+		host: 'l9dwvv6j64hlhpul.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+		user: 'dplacwrhqlz1zbqc',
+		password: 'pedoe8xesw36wmx8',
+		database: 'jn5fe1k9jdm48o63'
 	}
 }
 
