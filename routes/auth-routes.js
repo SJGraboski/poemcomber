@@ -40,6 +40,8 @@ module.exports = function(app){
                 expiresIn: 1440 // Token is given but will expire in 24 hours (requiring a re-login)
             });
 
+            console.log(token);
+
             // send a cookie to the user with the proper info. 
             new Cookies(req, res).set('acces_token', token, {
                 httpOnly: true,
@@ -92,4 +94,21 @@ module.exports = function(app){
         })
     });
 
+    // the all command
+    app.all('*', function(req, res, next){
+        // get the token from the cookie
+        var token = new Cookies(req, res).get('access_token');
+        // verify the token
+        jwt.verify(token, app.get('jwtSecret'), function(err, decoded) {
+            if (err) {
+                console.log("Access Denied");
+                return res.json({success: false, message: "access denied"})
+            }
+            else {
+                console.log("looks legit!")
+                req.decoded = decoded;
+                next();
+            }
+        })
+    })
 }

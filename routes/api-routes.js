@@ -25,10 +25,16 @@ function checkUser(callback){
 		}
 		// if not grab the info we need
 		else{
+			console.log()
 			// place the decoded info in the callback
 			callback(decoded);
 		}
 	})
 }
 
-
+// test route
+module.exports = function(app) {
+	app.get('/api/test', function(req, res) {
+		res.json(req.decoded);
+	})
+}

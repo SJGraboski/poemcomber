@@ -9,11 +9,17 @@ var User = sequelize.define("user", {
 		type: Sequelize.INTEGER,
 		autoIncrement: true,
 		primaryKey: true,
+		allowNull: true,
 		unique: true
 	},
 	username: {
 		type: Sequelize.STRING,
+		allowNull: true,
 		unique: true
+	},
+	password: {
+		type: Sequelize.STRING,
+		allowNull: true
 	},
 	role: {
 		type: Sequelize.STRING
