@@ -18,9 +18,11 @@
   "homepage": "https://github.com/SJGraboski/poemcomber#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
+    "cookies": "^0.6.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.5",
+    "jsonwebtoken": "^6.2.0",
     "mysql": "^2.10.2",
     "sequelize": "^3.23.0"
   }

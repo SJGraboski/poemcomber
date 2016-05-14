@@ -3,8 +3,9 @@ use poem_comb;
 
 create table users
 	(
-		id int auto_increment not null,
-		username varchar(255) not null,
+		id int auto_increment not null unique,
+		username varchar(255) not null unique,
+		password varchar(255) not null unique
 		role boolean not null,
 		latest timestamp not null,
 		primary key(id)
