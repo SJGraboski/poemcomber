@@ -3,7 +3,7 @@
  * =========================== */
 
 // Dependencies
-var Seqeulize = require('sequelize');
+var Sequelize = require('sequelize');
 
 // source: obj containing our connections
 var source = {
@@ -25,7 +25,7 @@ var source = {
 }
 
 // Select a connection
-var bonafide = source.localhost;
+var bonafide = source.jawsDB;
 
 // create the MySQL connection with Sequelize
 var sequelize = new Sequelize(bonafide.database, bonafide.user, bonafide.password, {

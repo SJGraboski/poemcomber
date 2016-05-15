@@ -24,7 +24,7 @@ var User = sequelize.define("user", {
 	role: {
 		type: Sequelize.STRING
 	}
-}
+})
 
 // sync with DB
 User.sync();

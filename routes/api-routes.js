@@ -1,7 +1,7 @@
 /* Api routes 
  * ========== */
+ // require express
 var jwt = require('jsonwebtoken');
-var Cookies = require('cookies');
 
 /* -/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
     FOR EVERY USER API ROUTE, YOU MUST CALL THIS FUNCTION
