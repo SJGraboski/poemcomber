@@ -23,6 +23,9 @@ var User = sequelize.define("user", {
 	},
 	role: {
 		type: Sequelize.STRING
+	},
+	instructorName: {
+		type: Sequelize.STRING
 	}
 })
 
