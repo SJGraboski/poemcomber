@@ -69,29 +69,29 @@ module.exports = function(app){
                 username: username,
                 password: password,
                 role: "student"
-        }).then(function(){ // and we log them in upon registration, same as above
-            User.findAll({
-            where: {
-                username: username,
-                password: password
-            }
-            })
         }).then(function(result){
-            var user = result[0].datavalues;
+            console.log(result);
+            var user = result.dataValues;
+            console.log(user);
             // create JSON token
             var token = jwt.sign(user, app.get('jwtSecret'), {
                 expiresIn: 1440 // Token is given but will expire in 24 hours (requiring a re-login)
             });
 
-            // send a cookie to the user with the proper info. 
             new Cookies(req, res).set('access_token', token, {
-                httpOnly: false,
+                httpOnly: true,
                 secure: false
             });
-
+            // Then send it to the user. This token will need to be used to access the API
+            res.json({
+                success: true,
+                message: "Access granted. Proceed to the holy gateway of our API. Just be sure to use the token!",
+                token: token
+            });
             // send response
             res.send("{'message':'Success! You're in!'")
         }).catch(function(err) {
+            console.log(err);
             res.status(403).json("{'error':'" + err + "'");
         })
     })
@@ -104,6 +104,7 @@ module.exports = function(app){
         jwt.verify(token, app.get('jwtSecret'), function(err, decoded) {
             if (err) {
                 console.log("Not yet");
+                console.log(decoded)
                 return res.json({success: false, message: "access denied"})
             }
             else {

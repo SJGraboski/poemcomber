@@ -18,6 +18,9 @@ var Assignment = sequelize.define("assignments", {
 	},
 	summary:{
 		type: Sequelize.STRING
+	},
+	instructor: {
+		type: Sequelize.STRING
 	}
 
 });

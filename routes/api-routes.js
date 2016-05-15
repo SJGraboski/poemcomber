@@ -13,4 +13,10 @@ module.exports = function(app) {
 	app.get('/api/test', function(req, res) {
 		res.json(req.decoded);
 	})
+
+	// post poem
+	app.post('/api/postpoem', function(req, res) {
+		console.log(req.body);
+		res.json(req.body);
+	})
 }
