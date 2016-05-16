@@ -15,6 +15,7 @@ function grabpoem() {
 	// first, grab the vals, save it to data
 	var data = {
 		title: $('#title').val().trim(),
+		author: $('#author').val().trim(),
 		summary: $('#summary').val().trim(),
 		excerpt: $('#excerpt').val().trim()
 	}
@@ -24,9 +25,6 @@ function grabpoem() {
 
 	// grab the current url
 	var currentURL = window.location.origin;
-
-	debugger;
-	console.log(poemConvert(data.excerpt));
 
 	// make the ajax call to the api
 	$.post(currentURL + "/api/postpoem", data, function(result){

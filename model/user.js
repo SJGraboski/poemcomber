@@ -4,7 +4,7 @@ var Sequelize = require('sequelize');
 var sequelize = require('../config/connection.js');
 
 // make user model 
-var User = sequelize.define("user", {
+var Users = sequelize.define("user", {
 	id: {
 		type: Sequelize.INTEGER,
 		autoIncrement: true,
@@ -30,7 +30,7 @@ var User = sequelize.define("user", {
 })
 
 // sync with DB
-User.sync();
+Users.sync();
 
 // export it!
-module.exports = User;
+module.exports = Users;

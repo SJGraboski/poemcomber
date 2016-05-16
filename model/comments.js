@@ -2,7 +2,7 @@ var Sequelize = require("sequelize");
 var sequelize = require("../config/connection.js");
 
 
-var Comment = sequelize.define("comments", {
+var Comments = sequelize.define("comments", {
 	id: {
 		type: Sequelize.INTEGER,
 		autoIncrement: true,
@@ -29,12 +29,9 @@ var Comment = sequelize.define("comments", {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	}
-
-
-
 });
 
 
-Comment.sync();
+Comments.sync();
 
-module.exports = Comment;
+module.exports = Comments;

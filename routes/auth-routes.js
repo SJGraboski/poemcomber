@@ -7,9 +7,9 @@ var jwt = require('jsonwebtoken');
 var Cookies = require('cookies');
 
 // bring in appropos models
-var User = require('../model/user.js');
-var Comment = require('../model/comments.js');
-var Assignment = require('../model/assignments.js');
+var Users = require('../model/user.js');
+var Comments = require('../model/comments.js');
+var Assignments = require('../model/assignments.js');
 
 // ===============================================================================
 // ROUTING
@@ -30,7 +30,7 @@ module.exports = function(app){
         var password = req.body.password;
 
         // find user by searching for username and password
-        User.findAll({
+        Users.findAll({
             where: {
                 username: username,
                 password: password
@@ -65,7 +65,7 @@ module.exports = function(app){
         var password = req.body.password;
 
         // insert sequelize here to grab the username, password, role and latest from database
-        User.create({
+        Users.create({
                 username: username,
                 password: password,
                 role: "student"

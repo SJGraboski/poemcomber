@@ -1,7 +1,7 @@
 var Sequelize = require("sequelize"); 
 var sequelize = require("../config/connection.js");
 
-var Assignment = sequelize.define("assignments", {
+var Assignments = sequelize.define("assignments", {
 	id: {
 		type: Sequelize.INTEGER,
 		autoIncrement: true,
@@ -16,6 +16,10 @@ var Assignment = sequelize.define("assignments", {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
+	author:{
+		type: Sequelize.STRING,
+		allowNull: false
+	},
 	summary:{
 		type: Sequelize.STRING
 	},
@@ -26,6 +30,6 @@ var Assignment = sequelize.define("assignments", {
 });
 
 
-Assignment.sync();
+Assignments.sync();
 
-module.exports = Assignment ;
+module.exports = Assignments ;
