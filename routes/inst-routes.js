@@ -1,6 +1,7 @@
 // require path
 var path = require('path');
 
+// test if user is instructor
 function instTest(req) {
 	if(req.decoded.role == 'instructor') {
 		return true;
@@ -12,6 +13,7 @@ function instTest(req) {
 
 // export the urls
 module.exports = function(app){
+
 	app.get('/postpoem', function(req, res) {
 		if (instTest(req)) {
 			res.sendFile(path.join(__dirname + '/../views/postpoem.html'))
@@ -20,6 +22,7 @@ module.exports = function(app){
 			res.sendFile(path.join(__dirname + '/../views/login.html'))
 		}
 	})
+
 	app.get('/postpoem.html', function(req, res) {
 		if (instTest(req)) {
 			res.sendFile(path.join(__dirname + '/../views/postpoem.html'))
@@ -28,4 +31,13 @@ module.exports = function(app){
 			res.sendFile(path.join(__dirname + '/../views/login.html'))
 		}
 	})
+
+	app.get('/instructor', function(req,res){
+		if (instTest(req)) {
+			res.sendFile(path.join(__dirname + '/../view/instructor.html'));
+		}
+		else {
+			res.sendFile(path.join(__dirname + '/../views/login.html'))
+		}
+	});
 }

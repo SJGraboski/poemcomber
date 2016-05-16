@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>students overview</title>
+
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+		<meta charset="utf-8">
+		<style>
+		</style>
+</head>
+<body>
+
+	<div class="container">
+		<!-- header and links -->
+		<div class="col col-lg-12">
+			<div style="float:left;background-color:gray;">
+				<h1>PoemComber</h1>
+			</div>
+			<div style="float:right;">
+				<a href="http://www.google.com/">Overview</a>
+				<a href="http://www.google.com/">Assignment</a>
+				<a href="http://www.google.com/">Comments</a>
+				<a href="http://www.google.com/">Logout</a>
+			</div>
+		</div>
+		<!-- clears the floats from previous column -->
+		<div style="clear:both;"></div>
+		<!-- mainbody -->
+			<div class="col col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><strong>Assignments</strong></h3>
+					</div>
+					<div class="panel-body" id="assignments">
+
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	
+
+
+
+
+	
+
+
+<script type="text/javascript">
+
+		var currentURL = window.location.origin;
+
+		console.log(currentURL + "/api");
+
+		$.get(currentURL + "/api", function(data){
+
+	/*		for (var i =0; i < data.length; i++){
+				var wellSection = $("<div>");
+				wellSection.addClass('well');
+				wellSection.attr('id', 'characterWell-' + i)
+				$('#wellSection').append(wellSection);				
+
+				$("#characterWell-" + i).append("<h2>" + data[i].name + "</h2>");
+				$("#characterWell-" + i).append("<h3>Role: " + data[i].role + "</h4>");
+				$("#characterWell-" + i).append("<h3>Age: " + data[i].age + "</h4>");
+				$("#characterWell-" + i).append("<h3>Force Points: " + data[i].forcePoints + "</h4>");	
+			}
+		}) */
+
+</script>
+
+</body>
+</html>

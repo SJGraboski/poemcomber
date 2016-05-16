@@ -34,6 +34,7 @@ app.use(express.static(staticContentFolder));
 require('./routes/html-routes.js')(app);
 require('./routes/auth-routes.js')(app);
 require('./routes/inst-routes.js')(app);
+require('./routes/stu-routes.js')(app);
 require('./routes/api-routes.js')(app);
 
 // Execute server
