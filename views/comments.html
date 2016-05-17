@@ -39,5 +39,69 @@
   </div>
 </div>
 </div>
+<script type="text/javascript">
+function getComments(){
+
+/*
+  data{
+title: “title in here”,
+author: “author in here”,
+poem: “poem in here”,
+createdAt: timestamp from db,
+comments: [
+comment: {
+startline: x,
+endline: y
+}, comment: {
+startline: x,
+endline: y
+}
+]
+      };
+*/
+
+
+
+
+
+$.get(currentURL + /*need path */ function(result){
+
+  $('#poem').html(result.poem);
+  var contentDiv = $('<div>');
+  contentDiv.append('<h4>'+ result.title + '<p>');
+  contentDiv.append('<h4>' + result.author + '<p>');
+  contentDiv.append('<h4>' + result.createdAt + '<p>');
+  $('#assignmentContent').html(contentDiv);
+  var commentDiv = $('<div>');
+  for(var i = 0 ; i < result.comments.length ; i++){
+  commentDiv.append('<div>'+result.comments[i].startline + "," + result.comments[i].endline +'<div>');
+
+
+
+  }
+  $('#comments').html(commentDiv);
+
+
+
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+}
+</script>
 </body>
 </html>
