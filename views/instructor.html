@@ -6,11 +6,23 @@
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
 
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
+ 	<script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 		<meta charset="utf-8">
 		<style>
+			body {background-color:blue;}
+			a {background-color:yellow;}
+			#mainbody {background-color:blue;margin:50px;}
+			.col {border-color:black;background-color:blue;}
+			div {text-align: center;vertical-align: middle;}
+			.btn-info{margin:20px;}
+			.btn-lg{width:200px;}
+			.full-width{width:100%;height:100%;background-color: blue;}
+			.gray{background-color: gray;margin:0px;}
+			p{width:100%;}
+			.container-fluid{padding:0px;background-color: gray;}
 		</style>
 </head>
 <body>
@@ -67,25 +79,48 @@
 
 <script type="text/javascript">
 
+function getAssignments(){
 		var currentURL = window.location.origin;
 
-		console.log(currentURL + "/api");
+		
 
-		$.get(currentURL + "/api", function(data){
+		$.get(currentURL + "/api/professoroverview/assignments", function(data){
+			
+			console.log("Test");
+			console.log(data);
 
-	/*		for (var i =0; i < data.length; i++){
-				var wellSection = $("<div>");
-				wellSection.addClass('well');
-				wellSection.attr('id', 'characterWell-' + i)
-				$('#wellSection').append(wellSection);				
+			for(var i = 0 ; i < data.length ; i++){
 
-				$("#characterWell-" + i).append("<h2>" + data[i].name + "</h2>");
-				$("#characterWell-" + i).append("<h3>Role: " + data[i].role + "</h4>");
-				$("#characterWell-" + i).append("<h3>Age: " + data[i].age + "</h4>");
-				$("#characterWell-" + i).append("<h3>Force Points: " + data[i].forcePoints + "</h4>");	
+				var assignment = $('<div>');
+				assignment.append("<h4>" + data[i].title  + "<h4>")
+				$("#assignments").append(assignment);
 			}
-		}) */
+		
 
+		})
+}
+function getStudents(){
+		var currentURL = window.location.origin;
+
+		
+
+		$.get(currentURL + "/api/professoroverview/students", function(data){
+			
+			console.log("Test");
+			console.log(data);
+
+			for(var i = 0 ; i < data.length ; i++){
+
+				var student = $('<div>');
+				student.append("<h4>" + data[i].username  + "<h4>")
+				$("#students").append(student);
+			}
+		
+
+		})
+}
+getAssignments();
+getStudents();
 </script>
 
 </body>

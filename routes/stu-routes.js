@@ -14,6 +14,8 @@ function stuTest(req, inst) {
 	}
 }
 
+module.exports = function(app){
+
 app.get('/student', function(req, res){
 	if (stuTest(req, false)) {
 		res.sendFile(path.join(__dirname + '/../view/student.html'));
@@ -31,4 +33,4 @@ app.get('/comments/:id', function(req, res){
 		res.sendFile(path.join(__dirname + '/../views/login.html'))
 	}
 });
-​
+}

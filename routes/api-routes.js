@@ -154,6 +154,8 @@ module.exports = function(app) {
 	// show assignments on Professor page
 	app.get("/api/professoroverview/assignments", function(req, res){
       
+     
+
       Assignments.findAll({}).then(function(result){
           
           res.json(result);
@@ -163,6 +165,8 @@ module.exports = function(app) {
 	// show student info on professor page
   app.get("/api/professoroverview/students", function(req, res){
       
+      
+
       Users.findAll({
           where:{
               role:"student"
@@ -175,6 +179,8 @@ module.exports = function(app) {
 
   // show assignments on student page
   app.get("/api/studentoverview/assignments", function(req, res){
+      
+      
       
       Assignments.findAll({}).then(function(result){
           
