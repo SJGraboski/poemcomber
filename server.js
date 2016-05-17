@@ -8,7 +8,19 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var path = require('path');
-
+var sm = require('sitemap')
+// Creates a sitemap object given the input configuration with URLs 
+var sitemap = sm.createSitemap({
+	hostname: 'http://example.com',
+      cacheTime: 600000,        // 600 sec - cache purge period 
+      urls: [
+        { url: '/',  changefreq: 'daily', priority: 1 }
+      ]
+    });
+// Generates XML with a callback function 
+sitemap.toXML( function(xml){ console.log(xml) });
+// Gives you a string containing the XML data 
+var xml = sitemap.toString();
 
 // Express App
 // ====================================
@@ -28,6 +40,13 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 var staticContentFolder = __dirname + '/views';
 console.log(staticContentFolder);
 app.use(express.static(staticContentFolder));
+
+// Make site map
+// ===================================
+app.get('/sitemap.xml', function(req, res) {
+  res.header('Content-Type', 'application/xml');
+  res.send( sitemap.toString() );
+});
 
 // App Routes
 // ===================================

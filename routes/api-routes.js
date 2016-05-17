@@ -119,6 +119,8 @@ module.exports = function(app) {
 								poemMaker(filedir);
 								// log our success story
 								console.log("We found a good name! File saved as " + filename + "(" + i + ").txt");
+								// send ajax the success
+								res.end("{'success' : 'Updated Successfully', 'status' : 200}");
 								// switch the counter on
 								counter = true;
 							} catch(err) {
@@ -143,6 +145,8 @@ module.exports = function(app) {
 					filedir = "/../poems/" + filename + ".txt";
 					// create the entry in the database
 					poemMaker(filedir);
+					// send ajax the success
+					res.end("{'success' : 'Updated Successfully', 'status' : 200}");
 				})
 			}
 			else {
@@ -150,6 +154,39 @@ module.exports = function(app) {
 			}
 		})
 	})
+
+	// load the poem on the comments page
+	app.get("api/comments/:id", function(req, res) {
+		// poem id is from the url
+		var poemID = req.params.id;
+
+		// make the call for the poem info
+    Assignments.findAll({
+    	where: {
+    		id: poemID
+    	} // save poem info into a data object
+    }).then(function(result){
+    	var data = result;
+    	// try grabbing the file in the poem obj
+    	try{
+    		// save the poem itself to the data we'll shoot back
+    		data.poem = fs.readFileSync(path.join(__dirname + poem.textfileroute)) 
+    	} // if we run into an error, throw it
+    		catch(err) {
+    		if (err) throw err;
+    	}
+    	// ||||| commented out until we get comments |||||| 
+    	// ================================================
+    	// Comments.findAll({
+    	// 	attr: ['startingLine', 'endingLine'],
+    	// 	where: {
+    	// 		foreignAssignment: poemID
+    	// 	}
+    	// }).then(function(result){
+    	// data.comments = result
+    		res.json(result);
+    	})
+		})
 
 	// show assignments on Professor page
 	app.get("/api/professoroverview/assignments", function(req, res){
