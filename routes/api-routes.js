@@ -28,8 +28,9 @@ function poemConvert(excerpt) {
 	// add data-lines to each p-tag, with help from incrementing i
 	var i = 1;
 	excerpt = excerpt.replace(/<p>/g, function(match){
-		replacement = "<p data-line='" + i + "'>";
+		replacement = "<p class='poemLine' data-line='" + i + "'>";
 		i++;
+		// return the replacement
 		return replacement;
 	})
 	return excerpt;
@@ -201,19 +202,19 @@ module.exports = function(app) {
     		catch(err) {
     		if (err) throw err;
     	}
-    	res.json(data);
     	// ||||| commented out until we get comments |||||| 
     	// ================================================
-    	// Comments.findAll({
-    	// 	attr: ['startingLine', 'endingLine'],
-    	// 	where: {
-    	// 		foreignAssignment: poemID
-    	// 	}
-    	// }).then(function(result){
-    	// data.comments = result
-    		// res.json(result);
+    	Comments.findAll({
+    		where: {
+    			foreignAssignment: poemID
+    		},
+    		attributes: ['startingLine', "endingLine"]
+    	}).then(function(result){
+    	data.comments = result
+    		res.json(data);
     	})
 		})
+	})
 
 	// show assignments on Professor page
 	app.get("/api/professoroverview/assignments", function(req, res){
