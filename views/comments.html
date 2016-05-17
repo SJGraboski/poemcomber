@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js'></script>
+  <script src='/assets/js/comments.js'></script>
         <meta charset="utf-8">
         <style>
         .highlighted span {
@@ -47,83 +48,7 @@
 </div>
 </div>
 <script type="text/javascript">
-function getPoem(){
 
-/*
-  data{
-title: “title in here”,
-author: “author in here”,
-poem: “poem in here”,
-createdAt: timestamp from db,
-comments: [
-comment: {
-startline: x,
-endline: y
-}, comment: {
-startline: x,
-endline: y
-}
-]
-      };
-*/
-  console.log(window.location.pathname);
-  var currentURL = window.location.pathname;
-  console.log(currentURL);
-
-
-
-  $.get('/api' + currentURL, function(result){
-
-    // place relevant data in the poem section
-    var contentDiv = $('<div>');
-    contentDiv.append('<h4>'+ result.title + '<h4>');
-    contentDiv.append('<h5>' + result.author + '<h5>');
-    contentDiv.append(result.poem);
-    $('#poem').html(contentDiv);
-    
-    // format timestamp
-    result.createdAt = moment(result.createdAt).format("MMMM DD, YYYY");
-
-    // place relevant data in the assignment summary section
-    var assignmentDiv = $('<div>');
-    assignmentDiv.append('<p>' + result.summary + '</p>');
-    assignmentDiv.append('<p>' + result.createdAt + '</p>');
-    $('#assignmentContent').html(assignmentDiv);
-
-    // container for lines that need highlights (designates comment)
-    var commented = [];
-    // get range for each comment in the comment section
-    for (var i = 0; i < result.comments.length; i++) {
-      // save the start and end lines in vars
-      var start = result.comments[i].startingLine;
-      var end = result.comments[i].endingLine;
-
-      // check range of numbers between the vars 'start' and 'end'
-      for (var j = start; j <= end; j++) {
-        if (commented.indexOf(j) == -1) {
-          commented.push(j);
-        }
-      }
-    }
-
-    // for debug: log the commented array
-    console.log(commented);
-
-    // give all commented lines of poetry a highlight class if it has a comment
-    for (var i =0; i < commented.length; i++) {
-      var highlight = $('[data-line="' + commented[i] +'"]');
-      highlight.addClass('highlighted');
-    }
-
-    // var commentDiv = $('<div>');
-    // for(var i = 0 ; i < result.comments.length ; i++){
-    // commentDiv.append('<div>'+ result.comments[i].startline + "," + result.comments[i].endline +'<div>');
-    // }
-    // $('#comments').html(commentDiv);
-  });
-}
-
-getPoem();
 </script>
 </body>
 </html>
