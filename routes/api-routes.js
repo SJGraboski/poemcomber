@@ -19,11 +19,11 @@ var Assignments = require('../model/assignments.js');
 // to add proper element tags and class names
 function poemConvert(excerpt) {
 	// replace all instances of double-line breaks with <br />\n
-	excerpt = excerpt.replace(/\n\n/g, "</p><br /><p>");
+	excerpt = excerpt.replace(/\n\n/g, "</span></p><br /><p><span>");
 	// replace all instances of line breaks with </p><p>
-	excerpt = excerpt.replace(/\n/g, "</p><p>");
+	excerpt = excerpt.replace(/\n/g, "</span></p><p><span>");
 	// add p tags to beginning and end of excerpts
-	excerpt = "<div id='poemBody'><p>" + excerpt + "</p></div>";
+	excerpt = "<div id='poemBody'><p><span>" + excerpt + "</span></p></div>";
 
 	// add data-lines to each p-tag, with help from incrementing i
 	var i = 1;
