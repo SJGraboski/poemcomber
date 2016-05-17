@@ -25,6 +25,7 @@
     "handlebars": "^4.0.5",
     "jsonwebtoken": "^6.2.0",
     "mysql": "^2.10.2",
-    "sequelize": "^3.23.1"
+    "sequelize": "^3.23.1",
+    "sitemap": "^1.6.0"
   }
 }
