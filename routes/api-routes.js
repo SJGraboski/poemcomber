@@ -12,11 +12,33 @@ var Users = require('../model/user.js');
 var Comments = require('../model/comments.js');
 var Assignments = require('../model/assignments.js');
 
+
+// Define functions that the API will use
+
+// poemConvert:  takes poem data and uses regex 
+// to add proper element tags and class names
+function poemConvert(excerpt) {
+	// replace all instances of double-line breaks with <br />\n
+	excerpt = excerpt.replace(/\n\n/g, "</p><br /><p>");
+	// replace all instances of line breaks with </p><p>
+	excerpt = excerpt.replace(/\n/g, "</p><p>");
+	// add p tags to beginning and end of excerpts
+	excerpt = "<div id='poemBody'><p>" + excerpt + "</p></div>";
+
+	// add data-lines to each p-tag, with help from incrementing i
+	var i = 1;
+	excerpt = excerpt.replace(/<p>/g, function(match){
+		replacement = "<p data-line='" + i + "'>";
+		i++;
+		return replacement;
+	})
+	return excerpt;
+}
+
 /* -/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
     FOR EVERY USER API ROUTE, MAKE SURE YOU USE req.decoded
  * -/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
  This is the decoded cookie retrieved in auth-routes */
-
 
 module.exports = function(app) {
 
@@ -28,9 +50,9 @@ module.exports = function(app) {
 
 	/* IMPORTANT API ROUTES START HERE */
 
-	/* 1. Work with data from instructor's poem submission
-	 *     - /postpoem
-	 * =================================================== */
+// 1. Work with data from instructor's poem submission
+//     - /postpoem
+// =================================================== 
 	app.post('/api/postpoem', function(req, res){
 		
 		// get the user info from the cookie
@@ -155,26 +177,31 @@ module.exports = function(app) {
 		})
 	})
 
-	// load the poem on the comments page
-	app.get("api/comments/:id", function(req, res) {
+// 2: load the poem on the comments page
+// =====================================
+	app.get("/api/comments/:id", function(req, res) {
 		// poem id is from the url
 		var poemID = req.params.id;
-
 		// make the call for the poem info
-    Assignments.findAll({
+    Assignments.findOne({
     	where: {
     		id: poemID
     	} // save poem info into a data object
     }).then(function(result){
-    	var data = result;
+    	data = result.dataValues;
+    	console.log(result);
     	// try grabbing the file in the poem obj
     	try{
     		// save the poem itself to the data we'll shoot back
-    		data.poem = fs.readFileSync(path.join(__dirname + poem.textfileroute)) 
+    		data.poem = fs.readFileSync(path.join(__dirname + data.textfileroute), "utf-8");
+
+    		// convert the poem into something with html element tags, data-lines and id
+    		data.poem = poemConvert(data.poem); 
     	} // if we run into an error, throw it
     		catch(err) {
     		if (err) throw err;
     	}
+    	res.json(data);
     	// ||||| commented out until we get comments |||||| 
     	// ================================================
     	// Comments.findAll({
@@ -184,7 +211,7 @@ module.exports = function(app) {
     	// 	}
     	// }).then(function(result){
     	// data.comments = result
-    		res.json(result);
+    		// res.json(result);
     	})
 		})
 
@@ -216,8 +243,6 @@ module.exports = function(app) {
 
   // show assignments on student page
   app.get("/api/studentoverview/assignments", function(req, res){
-      
-      
       
       Assignments.findAll({}).then(function(result){
           

@@ -6,7 +6,7 @@ function stuTest(req, inst) {
 	if(req.decoded.role == 'student') {
 		return true;
 	}
-	if (inst && req.decoded.role == 'student') {
+	if (inst && req.decoded.role == 'instructor') {
 		return true;
 	}
 	else {
@@ -17,7 +17,7 @@ function stuTest(req, inst) {
 module.exports = function(app) {
 	app.get('/student', function(req, res){
 		if (stuTest(req, false)) {
-			res.sendFile(path.join(__dirname + '/../view/student.html'));
+			res.sendFile(path.join(__dirname + '/../viewa/student.html'));
 		}
 		else{
 			res.sendFile(path.join(__dirname + '/../views/login.html'))
@@ -25,8 +25,9 @@ module.exports = function(app) {
 	});
 
 	app.get('/comments/:id', function(req, res){
+		console.log(req.decoded);
 		if (stuTest(req, true)) {
-			res.sendFile(path.join(__dirname + '/../view/comments.html'));
+			res.sendFile(path.join(__dirname + '/../views/comments.html'));
 		}
 		else{
 			res.sendFile(path.join(__dirname + '/../views/login.html'));
