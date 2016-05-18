@@ -15,7 +15,7 @@ function grabpoem() {
 	var currentURL = window.location.origin;
 
 	// make the ajax call to the api
-	$.get(currentURL + "/api/postpoem", data, function(result){
+	$.post(currentURL + "/api/postpoem", data, function(result){
 		console.log("ok");
 	});
 	return false;

@@ -39,7 +39,7 @@ endline: y
     var assignmentDiv = $('<div>');
     assignmentDiv.append('<p>' + result.summary + '</p>');
     assignmentDiv.append('<p>' + result.createdAt + '</p>');
-    $('#assignmentContent').html(assignmentDiv);
+    $('#assignmentSection').html(assignmentDiv);
 
     // container for lines that need highlights (designates comment)
     var commented = [];
@@ -65,12 +65,6 @@ endline: y
       var highlight = $('[data-line="' + commented[i] +'"]');
       highlight.addClass('highlighted');
     }
-
-    // var commentDiv = $('<div>');
-    // for(var i = 0 ; i < result.comments.length ; i++){
-    // commentDiv.append('<div>'+ result.comments[i].startline + "," + result.comments[i].endline +'<div>');
-    // }
-    // $('#comments').html(commentDiv);
   });
 }
 
@@ -85,8 +79,41 @@ function getComments(ptag) {
   // make a post call with a success function 
   // that populates the comments with the comment found
   $.get(url, function(results){
-    // comment fill in goes here
-    console.log(ok);
+    console.log(results);
+    // make a comments div
+    var commentsDiv = $('<div>').addClass("CommentsSection")
+    // get to comments array in the json
+    var comments = results.comments;
+    // go through each comment obj in comment array
+    for (var i =0; i < comments.length; i++){
+      // make a div for one comment
+      var aComment = $('<div>').addClass('comments');
+      // save relevant comment info
+      var c_text = $('<p>').addClass('commentText')
+                   .text("\"" + comments[i].text + "\"");
+      var c_user = $('<p>').addClass('commentAuthor')
+                   .html("Comment by <span>" + comments[i].user + "</span>");
+      var c_line = $('<p>').addClass('commentLines');
+
+      // check whether the comment is for more than 1 line
+      if(comments[i].startLine == comments[i].endLine) {
+        // if it's only for one line, state which line
+        c_line.text("Line " + comments[i].startLine);
+      }
+      else {
+        // if it's for more than one line, state which lines
+        c_line.text("Lines " + comments[i].startLine + "-" + comments[i].endLine);
+      }
+
+      // format timestamp for comment date
+      var c_date = moment(comments[i].date).format("hh:mma - MMMM DD, YYYY");
+      // father the div
+      aComment.append(c_user, c_date, c_text, c_line);
+      // append it to the main comment div
+      commentsDiv.append(aComment);
+    }
+    // with all comment divs collected, innerHTML it to the page
+    $('#commentSection').html(commentsDiv);
   });
 }
 

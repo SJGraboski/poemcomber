@@ -2,6 +2,8 @@
  * ========== */
  // require express
 var jwt = require('jsonwebtoken');
+// require sequelize
+var sequelize = require('../config/connection.js');
 // require file seeker
 var fs = require('fs');
 //require path
@@ -16,12 +18,26 @@ var Assignments = require('../model/assignments.js');
 // Define functions that the API will use
 
 // poemConvert:  takes poem data and uses regex 
-// to add proper element tags and class names
+// to add proper element tags and class names "</span></p><br /><p><span>");
 function poemConvert(excerpt) {
 	// replace all instances of double-line breaks with <br />\n
-	excerpt = excerpt.replace(/\n\n/g, "</span></p><br /><p><span>");
+	excerpt = excerpt.replace(/\n{2,}/g, function(match) {
+		// count occurrences of \n
+		var occurrences = match.match(/\n/g).length;
+		// substract one from occurrences to get number of <br /> tags
+		var brs = "";
+		for (var i = 0; i < (occurrences - 1); i++) {
+			brs += "<br />";
+		}
+		// construct the string
+		var replacement = "</span></p>" + brs + "<p><span>";
+		// return it
+		return replacement;
+	})
+
 	// replace all instances of line breaks with </p><p>
 	excerpt = excerpt.replace(/\n/g, "</span></p><p><span>");
+
 	// add p tags to beginning and end of excerpts
 	excerpt = "<div id='poemBody'><p><span>" + excerpt + "</span></p></div>";
 
@@ -202,8 +218,6 @@ module.exports = function(app) {
     		catch(err) {
     		if (err) throw err;
     	}
-    	// ||||| commented out until we get comments |||||| 
-    	// ================================================
     	Comments.findAll({
     		where: {
     			foreignAssignment: poemID
@@ -218,14 +232,36 @@ module.exports = function(app) {
 // 3: Show comments when user click highlights
 // ===========================================
 	app.get("/api/comments/:id/grab/:line", function(req, res) {
-		// test console.log, you can ignore
-		console.log(req.params.id); 
-		console.log(req.params.line);
 		// first grab the number of the line clicked
 		var clicked = req.params.line; 
 		// then, grab assignment id from the url path
 		var assignment = req.params.id
-		// TODO: getting the info from the relevant db's 
+		// get the info from the relevant db's 
+		var q1 = "SELECT * FROM comments INNER JOIN users ON comments.foreignUser = users.id ";
+		var q2 = "WHERE comments.foreignAssignment = ? AND ? <= comments.endingLine AND ? >= comments.startingLine";
+		var query = q1 + q2;
+		
+		sequelize.query(query,{ replacements: [assignment,clicked,clicked], type: sequelize.QueryTypes.SELECT }).then(function(result){
+
+			var data = {
+				comments:[]
+			}
+			
+			for(var i = 0 ; i < result.length ;i++){
+
+				var obj = {
+					text: result[i].comment,
+					commentDate: result[i].createdAt,
+					user: result[i].username,
+					startLine: result[i].startingLine,
+					endLine: result[i].endingLine
+				}
+
+				data.comments.push(obj);
+			}
+			res.json(data); 
+		})
+
 	});
 
 	// show assignments on Professor page
