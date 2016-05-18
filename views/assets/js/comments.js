@@ -1,69 +1,57 @@
-function getPoem(){
-
-/*
-  data{
-title: “title in here”,
-author: “author in here”,
-poem: “poem in here”,
-createdAt: timestamp from db,
-comments: [
-comment: {
-startline: x,
-endline: y
-}, comment: {
-startline: x,
-endline: y
-}
-]
-      };
-*/
-  console.log(window.location.pathname);
+function getPoem(modal){
+  // get url path (which we use in the api call)
   var currentURL = window.location.pathname;
-  console.log(currentURL);
 
-
-
+  // make the call
   $.get('/api' + currentURL, function(result){
 
     // place relevant data in the poem section
-    var contentDiv = $('<div>');
+    var contentDiv = $('<div>').addClass("thePoem");
     contentDiv.append('<h4>'+ result.title + '<h4>');
     contentDiv.append('<h5>' + result.author + '<h5>');
     contentDiv.append(result.poem);
-    $('#poem').html(contentDiv);
-    
-    // format timestamp
-    result.createdAt = moment(result.createdAt).format("MMMM DD, YYYY");
 
-    // place relevant data in the assignment summary section
-    var assignmentDiv = $('<div>');
-    assignmentDiv.append('<p>' + result.summary + '</p>');
-    assignmentDiv.append('<p>' + result.createdAt + '</p>');
-    $('#assignmentSection').html(assignmentDiv);
+    // if not modal version, place it in the regular spot
+    if (!modal) {
+      $('#poem').html(contentDiv);
 
-    // container for lines that need highlights (designates comment)
-    var commented = [];
-    // get range for each comment in the comment section
-    for (var i = 0; i < result.comments.length; i++) {
-      // save the start and end lines in vars
-      var start = result.comments[i].startingLine;
-      var end = result.comments[i].endingLine;
+      // format timestamp
+      result.createdAt = moment(result.createdAt).format("MMMM DD, YYYY");
 
-      // check range of numbers between the vars 'start' and 'end'
-      for (var j = start; j <= end; j++) {
-        if (commented.indexOf(j) == -1) {
-          commented.push(j);
+      // place relevant data in the assignment summary section
+      var assignmentDiv = $('<div>');
+      assignmentDiv.append('<p>' + result.summary + '</p>');
+      assignmentDiv.append('<p>' + result.createdAt + '</p>');
+
+
+      $('#assignmentSection').html(assignmentDiv);
+
+      // container for lines that need highlights (designates comment)
+      var commented = [];
+      // get range for each comment in the comment section
+      for (var i = 0; i < result.comments.length; i++) {
+        // save the start and end lines in vars
+        var start = result.comments[i].startingLine;
+        var end = result.comments[i].endingLine;
+
+        // check range of numbers between the vars 'start' and 'end'
+        for (var j = start; j <= end; j++) {
+          if (commented.indexOf(j) == -1) {
+            commented.push(j);
+          }
         }
       }
+
+      // give all commented lines of poetry a highlight class if it has a comment
+      for (var i =0; i < commented.length; i++) {
+        var highlight = $('[data-line="' + commented[i] +'"]');
+        highlight.addClass('highlighted');
+      }
     }
-
-    // for debug: log the commented array
-    console.log(commented);
-
-    // give all commented lines of poetry a highlight class if it has a comment
-    for (var i =0; i < commented.length; i++) {
-      var highlight = $('[data-line="' + commented[i] +'"]');
-      highlight.addClass('highlighted');
+    // otherwise put it in the modal, without comments and
+    // without adding anything into the assignment part of the page
+    else {
+      $('#modalPoem').html(contentDiv);
     }
   });
 }
@@ -117,15 +105,25 @@ function getComments(ptag) {
   });
 }
 
+function modalWorks() {
+  // first, we grab the poem and place it in the modal
+  getPoem(true);
+}
+
 // calls
 // ======
 
 // on ready
 $(document).on('ready', function(){
-  getPoem()
+  getPoem(false)
 });
 
 // on click highlighted
 $(document).on('click', '.highlighted', function(){
   getComments($(this));
+})
+
+// on click modal button
+$(document).on('click', '#commentMode', function(){
+  modalWorks();
 })
