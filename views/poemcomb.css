@@ -1,3 +1,13 @@
+h1 {margin:0px;
+ font-family: "le-monde-livre-classic-std-s"; font-size:400%;color:black;
+ }
+
+h2{
+font-family: "le-monde-livre-classic-std-s";font-size: 300%
+
+}
+
+label{float:left;}
 /*body no longer has color*/
 body {background-color:#;}
 /*94d1d1*/
@@ -7,8 +17,11 @@ div {text-align: center;vertical-align: middle;}
 /*e3b39c*/
 p{width:100%;}
 
-nav{background-color:#5bc0de;color:black;float:right;border-color:black;
-}
+nav{background-color:#5bc0de;color:black;float:right;}
+
+#nav {border-radius:4px;}
+
+.navbar-nav{border-color:black;border-width:3px;}
 
 a{color:black;}
 
@@ -40,6 +53,21 @@ a{color:black;}
 
 .wrapper{margin-top:30px;}
 
+.minitron {margin:45px;}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+form {padding-bottom:100px;}
+
+#submit{width:100%;margin:2px;height:60px;}
+
+.form-group-half {width:48%;float:left;}
+
+.littlepush{margin-right:4%;}
 
 /*still issues with small screens, need to convert to hamburger menu button*/
 @media screen and (max-width: 780px) {

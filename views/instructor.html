@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>professor overview</title>
+	<title>PoemComb: Professor Overview</title>
 
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
 
@@ -26,6 +26,9 @@
 		</style>-->
 
 			<link rel="stylesheet" type="text/css" href="poemcomb.css">
+
+			<script src="https://use.typekit.net/wfb7ujx.js"></script>
+			<script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 <body>
 
@@ -34,9 +37,11 @@
 		<div class="col col-lg-12 titlecol">
 			<div>
 				<!-- page title image, will be replaced when we get a font -->
-				<img src="./assets/image/poemcombtitle.png" alt="Title"  class="pcombimg">
+<!-- 				<img src="./assets/image/poemcombtitle.png" alt="Title"  class="pcombimg"> -->
 
-				<nav class="navbar navbar-light bg-faded">
+				<h1 class="pcombimg">PoemComb</h1>
+
+				<nav class="navbar navbar-light bg-faded" id="nav">
 			  
 					<ul class="nav navbar-nav">
 					    <li class="nav-item active">
@@ -71,7 +76,7 @@
 		<!-- header ends -->
 		<!-- mainbody -->
 			<div class="col col-lg-12">
-				<div style="text-align:center;"><h1>Instructor</h1></div>
+				<div style="text-align:center;"><h2>Instructor Dashboard</h2></div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title"><strong>Assignments</strong></h3>
@@ -98,15 +103,14 @@
 
 	</div> <!-- //container -->
 
-	  <!-- footer text -->
-  <div class="wrapper">
-    <p>Rutgers Coding Bootcamp</p>
-    <div class="push"></div>
-  </div>
-  <div class="footer">
-    <p>Copyright (c) 2016</p>
-  </div>
-  <!-- end footer text -->
+		<!-- the footer -->
+	<div class="container-fluid" id="footer">
+		<div class="col col-lg-12 gray" >
+			<p>Rutgers Coding Bootcamp</p>
+			<p>Copyright (c) 2016</p>
+		</div>
+	</div>
+	<!-- end footer -->
 
 
 <script type="text/javascript">

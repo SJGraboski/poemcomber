@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>PoemComb</title>
 
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
 
@@ -17,6 +17,10 @@
 
 	<link rel="stylesheet" type="text/css" href="poemcomb.css">
 
+	<script src="https://use.typekit.net/wfb7ujx.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+
 </head>
 <body>
 
@@ -26,9 +30,12 @@
 		<div class="col col-lg-12 titlecol">
 			<div>
 				<!-- page title image, will be replaced when we get a font -->
-				<img src="./assets/image/poemcombtitle.png" alt="Title"  class="pcombimg">
 
-				<nav class="navbar navbar-light bg-faded">
+<!-- 				<img src="./assets/image/poemcombtitle.png" alt="Title"  class="pcombimg"> -->
+
+				<h1 class="pcombimg">PoemComb</h1>
+
+				<nav class="navbar navbar-light bg-faded" id="nav">
 			  
 					<ul class="nav navbar-nav">
 					    <li class="nav-item active">
@@ -66,8 +73,10 @@
 		<div class="col col-lg-12">
 			<div id="mainbody">
 			<!-- <div class="jumbotron"> -->
-			<div class="jumbotron">
-				<h3>Welcome to</h3><img src="./assets/image/poemcombtitle.png" alt="Title" height="50px" align="middle" hspace="50px"><br>
+			<div class="minitron">
+				<h3>Welcome to</h3>
+				<h2 class="">PoemComb</h2>
+			<!-- 	<img src="./assets/image/poemcombtitle.png" alt="Title" height="50px" align="middle" hspace="50px"><br> -->
 			</div>
 				
 			<!-- </div> -->
@@ -83,87 +92,77 @@
 		</div>
 	</div>
 
-
-	<div class="container-fluid">
-		<div class="col col-lg-12 gray">
+	<!-- the footer -->
+	<div class="container-fluid" id="footer">
+		<div class="col col-lg-12 gray" >
 			<h3>What is PoemComb?</h3>
-			<p>Poemcomb is a tool for teachers and students to bring the classroom online. Assign homework, read replies, and grade it all in one place, with PoemComb.</p>
+			<p>Poemcomb is a tool for teachers and students to bring the classroom online.<br>Assign homework, read replies, and grade it all in one place, with PoemComb.</p>
+			<p>Rutgers Coding Bootcamp</p>
+			<p>Copyright (c) 2016</p>
 		</div>
 	</div>
+	<!-- end footer -->
 
-	<!-- footer text -->
-	<div class="wrapper">
-		<p>Rutgers Coding Bootcamp</p>
-		<div class="push"></div>
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content" >
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h2>Login</h2>	
+	      </div>
+	      <div class="modal-body" id="modal-content">
+			<!-- submission form -->	
+	  		<form>
+		    	<div class="form-group">
+		       		<label for="user name">User Name</label>
+		        	<input type="text" class="form-control" id="log_username" placeholder="">
+		        </div>
+
+		        <div class="form-group">
+		        	<label for="Password">Password</label>
+		        	<input type="password" class="form-control" id="log_password" placeholder="">
+		        </div>
+
+		        <button type="submit" class="btn btn-default" id="login">Submit</button>
+			</form>
+
+	      </div>
+	    </div>
+	  </div>
 	</div>
-	<div class="footer">
-		<p>Copyright (c) 2016</p>
+
+	<div id="myModal2" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content" >
+	      <div class="modal-header">
+
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h2>Register</h2>		
+	      </div>
+	      <div class="modal-body" id="modal-content">
+			<!-- submission form -->
+	  		<form>
+		    	<div class="form-group">
+		       		<label for="user name">User Name</label>
+		        	<input type="text" class="form-control" id="reg_username" placeholder="">
+		        </div>
+
+		        <div class="form-group">
+		        	<label for="Password">Password</label>
+		        	<input type="password" class="form-control" id="reg_password" placeholder="">
+		        </div>
+
+		        <button type="submit" class="btn btn-default" id="register">Submit</button>
+			</form>
+
+	      </div>
+			<!-- submission form ends -->
+	    </div>
+	  </div>
 	</div>
-	<!-- end footer text -->
-
-	</div>
-
-	
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content" >
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h2>Login</h2>	
-      </div>
-      <div class="modal-body" id="modal-content">
-		<!-- submission form -->	
-  		<form>
-	    	<div class="form-group">
-	       		<label for="user name">User Name</label>
-	        	<input type="text" class="form-control" id="log_username" placeholder="">
-	        </div>
-
-	        <div class="form-group">
-	        	<label for="Password">Password</label>
-	        	<input type="password" class="form-control" id="log_password" placeholder="">
-	        </div>
-
-	        <button type="submit" class="btn btn-default" id="login">Submit</button>
-		</form>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="myModal2" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content" >
-      <div class="modal-header">
-
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h2>Register</h2>		
-      </div>
-      <div class="modal-body" id="modal-content">
-		<!-- submission form -->
-  		<form>
-	    	<div class="form-group">
-	       		<label for="user name">User Name</label>
-	        	<input type="text" class="form-control" id="reg_username" placeholder="">
-	        </div>
-
-	        <div class="form-group">
-	        	<label for="Password">Password</label>
-	        	<input type="password" class="form-control" id="reg_password" placeholder="">
-	        </div>
-
-	        <button type="submit" class="btn btn-default" id="register">Submit</button>
-		</form>
-
-      </div>
-		<!-- submission form ends -->
-    </div>
-  </div>
-</div>
 
 <script type="text/javascript">
 

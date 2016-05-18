@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8">
 
-	<title>Post a Poem</title>
+	<title>PoemComb: Post a Poem</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-	<script src="//code.jquery.com/jquery.js"></script>
-	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<script src="assets/js/postpoem.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="poemcomb.css">
+
+	<!-- font link -->
+	<script src="https://use.typekit.net/wfb7ujx.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
 </head>
 <body>
 	<div class="container">
@@ -22,9 +26,11 @@
 		<div class="col col-lg-12">
 			<div>
 				<!-- page title image -->
-				<img src="./assets/image/poemcombtitle.png" alt="Title"  class="pcombimg">
+		<!-- 		<img src="./assets/image/poemcombtitle.png" alt="Title"  class="pcombimg">
+ -->
+				<h1 class="pcombimg">PoemComb</h1>
 
-				<nav class="navbar navbar-light bg-faded">
+				<nav class="navbar navbar-light bg-faded" id="nav">
 			  
 			  <ul class="nav navbar-nav">
 			    <li class="nav-item active">
@@ -60,12 +66,11 @@
 		<!-- clears the floats from previous column -->
 		<div style="clear:both"></div>
 		<!-- header ends -->
+
 		<div class="row">
 			<div class="col-md-12" style="text-align:center;">
-				<div class="jumbotron" style="padding:10px;margin-left:25%;margin-right:25%;width:50%;">
 					<h2>Submit a Poem</h2>
-					<h3>Please fill out the proper information below</h3>
-				</div>
+					<h3>Please fill out the form below</h3>
 			</div>
 		</div>
 
@@ -74,15 +79,20 @@
 		<div class="row">
 			<div class="col-md-12">
 				<form id="postpoem">
-			  <div class="form-group">
-			    <label for="title">Title</label>
-			    <input type="text" class="form-control" id="title" placeholder="Enter the title of the work">
-			    <label for="author">Author</label>
-			    <input type="text" class="form-control" id="author" placeholder="Enter the title of the work">
-			  </div> 
+				<div>
+				  <div class="form-group form-group-half littlepush">
+				    <label for="title">Title</label>
+				    <input type="text" class="form-control" id="title" placeholder="Enter the title of the work">
+				  </div> 
+
+				  <div class="form-group form-group-half">
+				    <label for="author">Author</label>
+				    <input type="text" class="form-control" id="author" placeholder="Enter the title of the work">
+				  </div> 
+				</div>
 			  <div class="form-group">
 			    <label for="summary">Assignment Summary</label>
-			    <textarea class="form-control" rows="5" id="summary"></textarea>
+			    <textarea class="form-control" rows="4" id="summary"></textarea>
 			  </div>
 			  <div class="form-group">
 			    <label for="email">Excerpt</label>
@@ -94,15 +104,13 @@
 		</div>
 	</div>
 
-			<!-- footer text -->
-		<div class="wrapper">
-
+		<!-- the footer -->
+	<div class="container-fluid" id="footer">
+		<div class="col col-lg-12 gray" >
 			<p>Rutgers Coding Bootcamp</p>
-			<div class="push"></div>
-		</div>
-		<div class="footer">
 			<p>Copyright (c) 2016</p>
 		</div>
-		<!-- end footer text -->
+	</div>
+	<!-- end footer -->
 </body>
 </html>
