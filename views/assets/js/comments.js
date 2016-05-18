@@ -75,18 +75,19 @@ endline: y
 }
 
 function getComments(ptag) {
-  // grab the line from the data-line attr
-  var data = ptag.attr('data-line');
+  // grab the line from the data-line attr, as a string
+  var line = ptag.attr('data-line');
 
   // grab the current window path for the api call ('/comments/:id')
   var currentURL = window.location.pathname;
   // make the api url
-  var url = '/api/' + currentURL + '/comments';
+  var url = '/api' + currentURL + '/grab/' + line;
   // make a post call with a success function 
   // that populates the comments with the comment found
-  $.post(url, data, function(){
-
-  })
+  $.get(url, function(results){
+    // comment fill in goes here
+    console.log(ok);
+  });
 }
 
 // calls
@@ -97,7 +98,7 @@ $(document).on('ready', function(){
   getPoem()
 });
 
-// // on click highlighted
-// $(document).on('click', '.highlighted', function(){
-
-// })
+// on click highlighted
+$(document).on('click', '.highlighted', function(){
+  getComments($(this));
+})

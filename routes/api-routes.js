@@ -215,6 +215,18 @@ module.exports = function(app) {
     	})
 		})
 	})
+// 3: Show comments when user click highlights
+// ===========================================
+	app.get("/api/comments/:id/grab/:line", function(req, res) {
+		// test console.log, you can ignore
+		console.log(req.params.id); 
+		console.log(req.params.line);
+		// first grab the number of the line clicked
+		var clicked = req.params.line; 
+		// then, grab assignment id from the url path
+		var assignment = req.params.id
+		// TODO: getting the info from the relevant db's 
+	});
 
 	// show assignments on Professor page
 	app.get("/api/professoroverview/assignments", function(req, res){
