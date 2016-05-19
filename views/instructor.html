@@ -1,34 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>PoemComb: Professor Overview</title>
-
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
-
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
- <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
  	<script src="https://code.jquery.com/jquery.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-		<meta charset="utf-8">
-		<!--<style>
-			body {background-color:blue;}
-			a {background-color:yellow;}
-			#mainbody {background-color:blue;margin:50px;}
-			.col {border-color:black;background-color:blue;}
-			div {text-align: center;vertical-align: middle;}
-			.btn-info{margin:20px;}
-			.btn-lg{width:200px;}
-			.full-width{width:100%;height:100%;background-color: blue;}
-			.gray{background-color: gray;margin:0px;}
-			p{width:100%;}
-			.container-fluid{padding:0px;background-color: gray;}
-		</style>-->
-
-			<link rel="stylesheet" type="text/css" href="poemcomb.css">
-
-			<script src="https://use.typekit.net/wfb7ujx.js"></script>
-			<script>try{Typekit.load({ async: true });}catch(e){}</script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="poemcomb.css">
+	<script src="https://use.typekit.net/wfb7ujx.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 <body>
 
@@ -45,21 +25,22 @@
 			  
 					<ul class="nav navbar-nav">
 					    <li class="nav-item active">
-					        <a class="nav-link" href="http://www.google.com/">Overview <span class="sr-only">(current)</span></a>
+					      <a class="nav-link" href="/overview.html">Overview
+					       </a>
 					    </li>
 					    <li class="nav-item">
-					        <a class="nav-link" href="http://www.google.com/">Assignment</a>
+					      <a class="nav-link" href="/postpoem.html">New Poem</a>
 					    </li>
 					    <li class="nav-item">
-					        <a class="nav-link" href="http://www.google.com/">Comments</a>
+					      <a class="nav-link" href="/comments.html">Comments</a>
 					    </li>
 					    <li class="nav-item">
-					        <a class="nav-link" href="http://www.google.com/">Logout</a>
+					      <a class="nav-link" href="/login.html">Logout</a>
 					    </li>
 					    <li class="nav-item">
 					     	<div class="linkmargin">
 					     		<!-- facebook and twitter links -->
-								<a href="http://www.facebook.com"><img class="linkbuttons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/2000px-F_icon.svg.png" ></a>
+								<a href="https://www.facebook.com/Poem-Comber-1701581786760432/?ref=aymt_homepage_panel"><img class="linkbuttons" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/2000px-F_icon.svg.png" ></a>
 								<br>
 								<a href="http://www.twitter.com"><img class="linkbuttons" src="http://orig14.deviantart.net/66e7/f/2013/025/2/0/twitter_button__logo_v2_by_pixxiepaynee-d5sog0x.png"></a>
 							</div>
@@ -75,30 +56,33 @@
 		<div style="clear:both"></div>
 		<!-- header ends -->
 		<!-- mainbody -->
-			<div class="col col-lg-12">
-				<div style="text-align:center;"><h2>Instructor Dashboard</h2></div>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><strong>Assignments</strong></h3>
-					</div>
-					<div class="panel-body" id="assignments">
-						id=assignments
 
-					</div>
+		<div style="text-align:center;"><h2>Instructor Dashboard</h2></div>
+
+		<div class="col col-lg-8">
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3><strong>Assignments</strong></h3>
+				</div>
+				<div class="panel-body" id="assignments">
+					id=assignments
+
 				</div>
 			</div>
+		</div>
 
-			<div class="col col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><strong>Students</strong></h3>
-					</div>
-					<div class="panel-body" id="students">
-						id=students
+		<div class="col col-lg-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3><strong>Students</strong></h3>
+				</div>
+				<div class="panel-body" id="students">
+					id=students
 
-					</div>
 				</div>
 			</div>
+		</div>
 
 
 	</div> <!-- //container -->
