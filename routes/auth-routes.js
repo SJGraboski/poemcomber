@@ -39,7 +39,7 @@ module.exports = function(app){
             var user = result[0].dataValues;
             // create JSON token
             var token = jwt.sign(user, app.get('jwtSecret'), {
-                expiresIn: 1440 // Token is given but will expire in 24 hours (requiring a re-login)
+                expiresIn: 86400 // Token is given but will expire in 24 hours (requiring a re-login)
             });
 
             new Cookies(req, res).set('access_token', token, {

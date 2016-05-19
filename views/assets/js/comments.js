@@ -3,7 +3,7 @@ function getPoem(modal){
   var currentURL = window.location.pathname;
 
   // make the call
-  $.get('/api' + currentURL, function(result){
+  $.get('/api' + currentURL , function(result){
 
     // place relevant data in the poem section
     var contentDiv = $('<div>').addClass("thePoem");
@@ -94,7 +94,8 @@ function getComments(ptag) {
       }
 
       // format timestamp for comment date
-      var c_date = moment(comments[i].date).format("hh:mma - MMMM DD, YYYY");
+      console.log(comments[i].date);
+      var c_date = moment(comments[i].commentDate).format("hh:mma - MMMM DD, YYYY");
       // father the div
       aComment.append(c_user, c_date, c_text, c_line);
       // append it to the main comment div
@@ -105,13 +106,133 @@ function getComments(ptag) {
   });
 }
 
-function modalWorks() {
+function modalPoem() {
   // first, we grab the poem and place it in the modal
   getPoem(true);
 }
 
+function startSelect(ptag){
+  // grab the line
+  startLine = ptag.attr("data-line");
+
+  var span = ptag.find('span');
+
+  // add tooltip to left
+  span.attr("data-toggle","tooltip");
+  span.attr("data-placement","left");
+  span.attr("data-original-title", "Starting Line");
+
+  // display the tooltip
+  span.tooltip({trigger: 'manual'}).tooltip('show');
+
+  // flick the clickedStart counter
+  clickedStart++;
+
+}
+
+function endSelect(ptag){
+  // grab the line
+  endLine = ptag.attr("data-line");
+  // if the user selects an endline that's less than the start line
+  // kill the function.
+  if (endLine < startLine ){
+    return false;
+  }
+  // grab the span
+  var span = ptag.find('span');
+
+  // if the line's already been selected as starting line
+  if (span.attr('data-original-title') == 'Starting Line') {
+    // change tooltip to reflect that the user's comment is for one line
+    span.attr("data-original-title", "One Line Comment")
+    span.tooltip({trigger: 'manual'}).tooltip('show');
+  }
+  // otherwise
+  else {
+    // add tooltip to right to show that it's the ending line
+    span.attr("data-toggle","tooltip");
+    span.attr("data-placement","right");
+    span.attr("data-original-title", "Ending Line");
+  }
+
+  // display the tooltip
+  span.tooltip({trigger: 'manual'}).tooltip('show');
+
+  // flick the clickedStart counter
+  clickedEnd++;
+}
+
+function submitComment(){
+  // if the user hasn't clicked a line on the comment yet, 
+  // kill the function
+  if (!clickedStart) {
+    return false
+    // TODO: warning text
+  }
+
+  // if somehow the endline precedes the startline
+  // kill the function
+  debugger;
+  if (endLine < startLine && endLine != 0) {
+    return false
+    // TODO: warning text
+  }
+
+  // grab the comment
+  var theComment = $('#modalComment').val();
+  // if the user hasn't entered a comment yet
+  // kill the function
+  debugger;
+  if (!theComment) {
+    debugger;
+    console.log("yeppers");
+    return false;
+  }
+  // if there's data in there, make sure it's not empty spaces.
+  // if it is, kill the function
+  else {
+    theComment = theComment.trim();
+    if (!theComment) {
+      console.log("yeppers");
+      return false;
+    }
+  }
+
+  // if all's good, send it out
+  // first, we prepare the data
+  var data = {
+    comment: theComment,
+    startLine: startLine,
+    // if endline is 0, make the endline the same as the startline.
+    // otherwise, save the endline
+    endLine: (endLine == 0) ? startLine : endLine
+  }
+
+  // set everything back to normal
+  // close the modal
+  $('#commentModal').modal('toggle');
+  // bring counters back to their zero state
+
+  revertCounters();
+}
+
+function revertCounters() {
+    // make clickedStart and clickedEnd false;
+  clickedStart = clickedEnd = false;
+
+  // revert endLine and startLine back to 0 
+  endLine = startLine = 0;
+}
+
 // calls
 // ======
+
+// start line counter
+var clickedStart = false;
+var clickedEnd = false;
+var startLine = 0;
+var endLine = 0;
+
 
 // on ready
 $(document).on('ready', function(){
@@ -125,5 +246,21 @@ $(document).on('click', '.highlighted', function(){
 
 // on click modal button
 $(document).on('click', '#commentMode', function(){
-  modalWorks();
+  modalPoem();
+})
+
+// on click poem line within modal
+$(document).on('click', '#modalPoem .poemLine', function(){
+  if (!clickedStart) {
+    startSelect($(this));
+  }
+  else if (!clickedEnd) {
+    endSelect($(this));
+  }
+})
+
+// on click comment submit button in modal
+$(document).on('click', '#modalSubmit', function(){
+  submitComment();
+  return false;
 })
