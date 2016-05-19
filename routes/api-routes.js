@@ -248,7 +248,6 @@ module.exports = function(app) {
 			}
 			
 			for(var i = 0 ; i < result.length ;i++){
-
 				var obj = {
 					text: result[i].comment,
 					commentDate: result[i].createdAt,
@@ -256,45 +255,79 @@ module.exports = function(app) {
 					startLine: result[i].startingLine,
 					endLine: result[i].endingLine
 				}
-
 				data.comments.push(obj);
 			}
 			res.json(data); 
 		})
-
 	});
 
-	// show assignments on Professor page
-	app.get("/api/professoroverview/assignments", function(req, res){
-      
-     
+//posts comment to database
+app.post("/api/comments/:id/post",function(req,res){
 
-      Assignments.findAll({}).then(function(result){
-          
+	var user = req.decoded.id;
+	var assignment = req.params.id;
+  var startLine = req.body.startLine
+  var endLine = req.body.endLine
+  var comment = req.body.comment
+
+  Comments.create({
+  	foreignAssignment:assignment,
+  	foreignUser: user,
+  	comment: comment,
+  	startingLine: startLine,
+  	endingLine: endLine
+	})
+
+  // send success
+	res.status(200).end();
+})
+
+// show assignments on Professor page
+	app.get("/api/professoroverview/assignments", function(req, res){
+	  var instructor = req.decoded.username;
+      Assignments.findAll({
+      	where: {
+    			instructor: instructor
+    		},
+		}).then(function(result){ 
           res.json(result);
       })
   });
 
 	// show student info on professor page
   app.get("/api/professoroverview/students", function(req, res){
-      
-      
-
+      console.log(req.decoded);
+      var instructor = req.decoded.username;
       Users.findAll({
           where:{
-              role:"student"
-          }
+          	  role:"student",
+          	  instructorName:instructor
+          },
       }).then(function(result){
-          
           res.json(result);
       })
   });
 
+  //get comments for particular student when click on by instructor
+	app.post("/api/professoroverview/studentcomments", function(req, res){
+		console.log(req.body);
+		Comments.findAll({
+			where:{
+				foreignUser:req.body.id
+			}
+		}).then(function(result){
+			res.json(result);
+		})
+	});
+
   // show assignments on student page
   app.get("/api/studentoverview/assignments", function(req, res){
-      
-      Assignments.findAll({}).then(function(result){
-          
+      var instructorName = req.decoded.instructorName;
+      Assignments.findAll({
+      	where:{
+      		instructor:instructorName
+      	}
+      }).then(function(result){     
           res.json(result);
       })
   });

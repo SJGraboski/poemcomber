@@ -1,4 +1,4 @@
-function getPoem(modal){
+function getPoem(modal, refresh){
   // get url path (which we use in the api call)
   var currentURL = window.location.pathname;
 
@@ -15,16 +15,19 @@ function getPoem(modal){
     if (!modal) {
       $('#poem').html(contentDiv);
 
-      // format timestamp
-      result.createdAt = moment(result.createdAt).format("MMMM DD, YYYY");
+      // if not a poem refresh, ignore assignment portion, but not comments
+      if (!refresh) {
+        // format timestamp
+        result.createdAt = moment(result.createdAt).format("MMMM DD, YYYY");
 
-      // place relevant data in the assignment summary section
-      var assignmentDiv = $('<div>');
-      assignmentDiv.append('<p>' + result.summary + '</p>');
-      assignmentDiv.append('<p>' + result.createdAt + '</p>');
+        // place relevant data in the assignment summary section
+        var assignmentDiv = $('<div>');
+        assignmentDiv.append('<p>' + result.summary + '</p>');
+        assignmentDiv.append('<p>' + result.createdAt + '</p>');
 
 
-      $('#assignmentSection').html(assignmentDiv);
+        $('#assignmentSection').html(assignmentDiv);
+      }
 
       // container for lines that need highlights (designates comment)
       var commented = [];
@@ -94,7 +97,6 @@ function getComments(ptag) {
       }
 
       // format timestamp for comment date
-      console.log(comments[i].date);
       var c_date = moment(comments[i].commentDate).format("hh:mma - MMMM DD, YYYY");
       // father the div
       aComment.append(c_user, c_date, c_text, c_line);
@@ -108,7 +110,7 @@ function getComments(ptag) {
 
 function modalPoem() {
   // first, we grab the poem and place it in the modal
-  getPoem(true);
+  getPoem(true, false);
 }
 
 function startSelect(ptag){
@@ -119,11 +121,10 @@ function startSelect(ptag){
 
   // add tooltip to left
   span.attr("data-toggle","tooltip");
-  span.attr("data-placement","left");
   span.attr("data-original-title", "Starting Line");
 
   // display the tooltip
-  span.tooltip({trigger: 'manual'}).tooltip('show');
+  span.tooltip({trigger: 'manual', placement: 'left'}).tooltip('show');
 
   // flick the clickedStart counter
   clickedStart++;
@@ -145,7 +146,7 @@ function endSelect(ptag){
   if (span.attr('data-original-title') == 'Starting Line') {
     // change tooltip to reflect that the user's comment is for one line
     span.attr("data-original-title", "One Line Comment")
-    span.tooltip({trigger: 'manual'}).tooltip('show');
+    span.tooltip({trigger: 'manual', placement: 'left'}).tooltip('show');
   }
   // otherwise
   else {
@@ -156,7 +157,7 @@ function endSelect(ptag){
   }
 
   // display the tooltip
-  span.tooltip({trigger: 'manual'}).tooltip('show');
+  span.tooltip({trigger: 'manual', placement: 'right'}).tooltip('show');
 
   // flick the clickedStart counter
   clickedEnd++;
@@ -172,7 +173,6 @@ function submitComment(){
 
   // if somehow the endline precedes the startline
   // kill the function
-  debugger;
   if (endLine < startLine && endLine != 0) {
     return false
     // TODO: warning text
@@ -182,9 +182,7 @@ function submitComment(){
   var theComment = $('#modalComment').val();
   // if the user hasn't entered a comment yet
   // kill the function
-  debugger;
   if (!theComment) {
-    debugger;
     console.log("yeppers");
     return false;
   }
@@ -198,22 +196,39 @@ function submitComment(){
     }
   }
 
-  // if all's good, send it out
+  // if all's good, cook the post materials
   // first, we prepare the data
   var data = {
     comment: theComment,
     startLine: startLine,
-    // if endline is 0, make the endline the same as the startline.
-    // otherwise, save the endline
     endLine: (endLine == 0) ? startLine : endLine
+    // Ternary operation (above): if endline is 0, 
+    // make the endline the same as the startline.
+    // otherwise, save the endline
   }
 
-  // set everything back to normal
-  // close the modal
-  $('#commentModal').modal('toggle');
-  // bring counters back to their zero state
+  // now grab the url's path
+  var currentURL = window.location.pathname;
 
-  revertCounters();
+  // then make the url for the api 
+  var url = '/api' + currentURL + "/post";
+
+  // and now post the data,
+  // setting everything back to normal on success
+  $.post(url, data, function() {
+
+    // Close the modal
+    $('#commentModal').modal('toggle');
+
+    // Bring counters back to their zero state
+    revertCounters();
+
+    // and refresh the poem on the page
+    getPoem(false, true);
+  });
+
+
+
 }
 
 function revertCounters() {
@@ -222,6 +237,16 @@ function revertCounters() {
 
   // revert endLine and startLine back to 0 
   endLine = startLine = 0;
+}
+
+function hideTooltips() {
+  // select all span tags with tooltips
+  var spans = $("[data-toggle='tooltip']");
+  spans.tooltip({trigger: 'manual'}).tooltip('hide');
+
+  // remove all apropos attributes
+  spans.tooltip('destroy');
+
 }
 
 // calls
@@ -236,7 +261,7 @@ var endLine = 0;
 
 // on ready
 $(document).on('ready', function(){
-  getPoem(false)
+  getPoem(false, false)
 });
 
 // on click highlighted
@@ -250,7 +275,7 @@ $(document).on('click', '#commentMode', function(){
 })
 
 // on click poem line within modal
-$(document).on('click', '#modalPoem .poemLine', function(){
+$(document).on('click', '#modalPoem .poemLine', function(e){
   if (!clickedStart) {
     startSelect($(this));
   }
@@ -260,7 +285,19 @@ $(document).on('click', '#modalPoem .poemLine', function(){
 })
 
 // on click comment submit button in modal
-$(document).on('click', '#modalSubmit', function(){
+$(document).on('click', '#modalSubmit', function(e){
   submitComment();
   return false;
+})
+
+// When clicking anywhere that isn't a poem line in the modal
+// revert the counter and hide all tooltips
+$(document).on('click', function(e){
+  var clicked = e.target.tagName;
+  var theID = e.target.id;
+  console.log(theID);
+  if(clicked != "SPAN" && clicked != "TEXTAREA" && theID != "#modalSubmit"  ){
+    revertCounters();
+    hideTooltips();
+  }
 })
