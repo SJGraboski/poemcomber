@@ -51,24 +51,23 @@
 	
 		</div>
 
-		<!-- clears the floats from previous column -->
-		<div style="clear:both"></div>
-		<!-- header ends -->
+<div style="clear:both;"></div>
 		<!-- mainbody -->
-		<div class="col col-lg-12">
-			<div style="text-align:center;"><h2>Student Assignments</h2></div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3><strong>Assignments</strong></h3>
-				</div>
-				<div class="panel-body" id="assignments">
-					id=assignments
+			<div class="col col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><strong>Assignments</strong></h3>
+					</div>
+					<div class="panel-body" id="assignments">
 
+
+					</div>
 				</div>
 			</div>
-		</div>
 
-	</div><!-- container -->
+
+
+		</div><!-- container -->
 	
 		<!-- the footer -->
 	<div class="container-fluid" id="footer">
@@ -80,27 +79,19 @@
 	<!-- end footer -->
 
 <script type="text/javascript">
-
 function getAssignments(){
 		var currentURL = window.location.origin;
-
 		
-
 		$.get(currentURL + "/api/studentoverview/assignments", function(data){
-
 			for(var i = 0 ; i < data.length ; i++){
-
 				var assignment = $('<div>');
 				assignment.append("<h4><a href='/comments/" + data[i].id + "'>" + data[i].title  + "</a><h4>")
 				$("#assignments").append(assignment);
 			}
 		
-
 		})
 }
-
 getAssignments();
-
 </script>
 
 </body>
