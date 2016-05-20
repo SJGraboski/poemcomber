@@ -66,7 +66,7 @@ function getComments(ptag) {
   // grab the current window path for the api call ('/comments/:id')
   var currentURL = window.location.pathname;
   // make the api url
-  var url = '/api' + currentURL + '/grab/' + line;
+  var url = '/api' + currentURL + 'grab/' + line;
   // make a post call with a success function 
   // that populates the comments with the comment found
   $.get(url, function(results){

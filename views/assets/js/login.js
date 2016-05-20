@@ -31,17 +31,18 @@ function login(register){
 	// register
 	if (register) {
 		$.post(currentURL + '/api/register', data, function(result){
-			console.log(result);
+			window.location.replace("/overview");
 			return false;
 		})
 	}
 	// login
 	else {
 		$.post(currentURL + '/api/login', data, function(result){
-			console.log(result);
+			window.location.replace("/overview");
 			return false;
 		})
 	}
+	// redirect to overview
 	return false;
 }
 

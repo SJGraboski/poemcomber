@@ -15,9 +15,6 @@ label{
   float: left;
 }
 
-a{
-  background-color: #5bc0de;
-}
 
 div{
   vertical-align: middle;
@@ -45,8 +42,8 @@ nav{
   border-width: 3px;
 }
 
-a{
-  color: black;
+a.nav-link{
+  color: black; 
 }
 
 .pcombimg {
@@ -178,6 +175,14 @@ form {
   margin: 0;
 }
 
+/* Comments Page */
+.highlighted span {
+  background-color: #e2e2e2;
+}
+
+.highlighted span:hover {
+  background-color: #ffff4d;
+}
 @media screen and (max-width: 1200px) {
   div.buttonRow .login {
     padding-left: 20px;
