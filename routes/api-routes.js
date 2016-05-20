@@ -310,12 +310,12 @@ app.post("/api/comments/:id/post",function(req,res){
 
   //get comments for particular student when click on by instructor
 	app.post("/api/professoroverview/studentcomments", function(req, res){
+		// These 2 lines create a join between assignments and comments
 		Assignments.hasMany(Comments, {foreignKey: 'foreignAssignment'})
 		Comments.belongsTo(Assignments, {foreignKey: 'foreignAssignment'})
 
-		Comments.findAll({ where: {foreignUser:req.body.id}, include: [Assignments]}).then(function(results){console.log(results[0].comment + ": " + 
-			results[0].assignment.title)});
-		
+		// this join allows us to grab comments, and all the assignment info
+		// relevant to that comment
 		Comments.findAll({
 			where:{
 				foreignUser: req.body.id
