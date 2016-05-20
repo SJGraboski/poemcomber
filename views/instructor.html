@@ -86,13 +86,13 @@ function getAssignments(){
 
 		$.get(currentURL + "/api/professoroverview/assignments", function(data){
 			
-			console.log("Test");
+			console.log("Assignment");
 			console.log(data);
 
 			for(var i = 0 ; i < data.length ; i++){
 
 				var assignment = $('<div>');
-				assignment.append("<h4>" + data[i].title  + "<h4>")
+				assignment.append("<a href='/comments/" + data[i].id + "/'>" + data[i].title  + ", by " + data[i].author +"</a>")
 				$("#assignments").append(assignment);
 			}
 		
@@ -103,22 +103,45 @@ function getStudents(){
 		var currentURL = window.location.origin;
 
 		
-
+		var dataArr = [];
 		$.get(currentURL + "/api/professoroverview/students", function(data){
-			
-			console.log("Test");
 			console.log(data);
-
-			for(var i = 0 ; i < data.length ; i++){
-
-				var student = $('<div>');
-				student.append("<h4>" + data[i].username  + "<h4>")
+				dataArr = data;
+		$.each(dataArr, function(i){
+					var id = dataArr[i].id;
+					var obj = {"id": id };
+			$.post(currentURL + "/api/professoroverview/studentcomments", obj , function(c_data){
+				console.log(i);
+				var student = $('<div class="students" data-id=' + dataArr[i].id +'>');
+				student.append("<h4>" + dataArr[i].username  + "<h4>");
+				if (c_data.length > 1) {
+					var list = $('<ul>');
+					for (var j = 0; j < c_data.length; j++){
+						list.append("<li><a href='/comments/" + c_data[j].assignment.id + "'>For \"" +
+												c_data[j].assignment.title + "\"</a>: " + c_data[j].comment + "</li>");
+					}
+					student.append(list);
+				}
 				$("#students").append(student);
-			}
-		
+			})
+		})			
+	})
+	}
 
-		})
-}
+ $(document).on('click', '.students', function(){
+ 	
+ 	var currentURL = window.location.origin;
+ 	var id = $(this).attr('data-id');
+ 	var obj = {id:id };
+
+
+
+ 
+ 	console.log("test");
+ 	console.log(data);
+})
+
+
 getAssignments();
 getStudents();
 </script>

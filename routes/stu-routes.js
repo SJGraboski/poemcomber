@@ -15,12 +15,15 @@ function stuTest(req, inst) {
 }
 
 module.exports = function(app) {
-	app.get('/student', function(req, res){
+	app.get('/overview', function(req, res){
 		if (stuTest(req, false)) {
-			res.sendFile(path.join(__dirname + '/../viewa/student.html'));
+			res.sendFile(path.join(__dirname + '/../views/student.html'));
+		}
+		else if (stuTest(req, true)){
+			res.sendFile(path.join(__dirname + '/../views/instructor.html'))
 		}
 		else{
-			res.sendFile(path.join(__dirname + '/../views/login.html'))
+			res.sendFile(path.join(__dirname + '/../views/login.html'));
 		}
 	});
 

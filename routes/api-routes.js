@@ -310,12 +310,18 @@ app.post("/api/comments/:id/post",function(req,res){
 
   //get comments for particular student when click on by instructor
 	app.post("/api/professoroverview/studentcomments", function(req, res){
-		console.log(req.body);
+		Assignments.hasMany(Comments, {foreignKey: 'foreignAssignment'})
+		Comments.belongsTo(Assignments, {foreignKey: 'foreignAssignment'})
+
+		Comments.findAll({ where: {foreignUser:req.body.id}, include: [Assignments]}).then(function(results){console.log(results[0].comment + ": " + 
+			results[0].assignment.title)});
+		
 		Comments.findAll({
 			where:{
-				foreignUser:req.body.id
-			}
-		}).then(function(result){
+				foreignUser: req.body.id
+			},
+			include: [Assignments]
+		}).then(function(result) {
 			res.json(result);
 		})
 	});
