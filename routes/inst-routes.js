@@ -31,13 +31,4 @@ module.exports = function(app){
 			res.sendFile(path.join(__dirname + '/../views/login.html'))
 		}
 	})
-
-	app.get('/instructor', function(req,res){
-		if (instTest(req)) {
-			res.sendFile(path.join(__dirname + '/../view/instructor.html'));
-		}
-		else {
-			res.sendFile(path.join(__dirname + '/../views/login.html'))
-		}
-	});
 }

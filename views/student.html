@@ -87,14 +87,11 @@ function getAssignments(){
 		
 
 		$.get(currentURL + "/api/studentoverview/assignments", function(data){
-			
-			console.log("Test");
-			console.log(data);
 
 			for(var i = 0 ; i < data.length ; i++){
 
 				var assignment = $('<div>');
-				assignment.append("<h4>" + data[i].title  + "<h4>")
+				assignment.append("<h4><a href='/comments/" + data[i].id + "'>" + data[i].title  + "</a><h4>")
 				$("#assignments").append(assignment);
 			}
 		

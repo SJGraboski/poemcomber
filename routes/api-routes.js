@@ -2,6 +2,8 @@
  * ========== */
  // require express
 var jwt = require('jsonwebtoken');
+// require sequelize
+var sequelize = require('../config/connection.js');
 // require file seeker
 var fs = require('fs');
 //require path
@@ -16,12 +18,26 @@ var Assignments = require('../model/assignments.js');
 // Define functions that the API will use
 
 // poemConvert:  takes poem data and uses regex 
-// to add proper element tags and class names
+// to add proper element tags and class names "</span></p><br /><p><span>");
 function poemConvert(excerpt) {
 	// replace all instances of double-line breaks with <br />\n
-	excerpt = excerpt.replace(/\n\n/g, "</span></p><br /><p><span>");
+	excerpt = excerpt.replace(/\n{2,}/g, function(match) {
+		// count occurrences of \n
+		var occurrences = match.match(/\n/g).length;
+		// substract one from occurrences to get number of <br /> tags
+		var brs = "";
+		for (var i = 0; i < (occurrences - 1); i++) {
+			brs += "<br />";
+		}
+		// construct the string
+		var replacement = "</span></p>" + brs + "<p><span>";
+		// return it
+		return replacement;
+	})
+
 	// replace all instances of line breaks with </p><p>
 	excerpt = excerpt.replace(/\n/g, "</span></p><p><span>");
+
 	// add p tags to beginning and end of excerpts
 	excerpt = "<div id='poemBody'><p><span>" + excerpt + "</span></p></div>";
 
@@ -202,8 +218,6 @@ module.exports = function(app) {
     		catch(err) {
     		if (err) throw err;
     	}
-    	// ||||| commented out until we get comments |||||| 
-    	// ================================================
     	Comments.findAll({
     		where: {
     			foreignAssignment: poemID
@@ -215,38 +229,111 @@ module.exports = function(app) {
     	})
 		})
 	})
+// 3: Show comments when user click highlights
+// ===========================================
+	app.get("/api/comments/:id/grab/:line", function(req, res) {
+		// first grab the number of the line clicked
+		var clicked = req.params.line; 
+		// then, grab assignment id from the url path
+		var assignment = req.params.id
+		// get the info from the relevant db's 
+		var q1 = "SELECT * FROM comments INNER JOIN users ON comments.foreignUser = users.id ";
+		var q2 = "WHERE comments.foreignAssignment = ? AND ? <= comments.endingLine AND ? >= comments.startingLine";
+		var query = q1 + q2;
+		
+		sequelize.query(query,{ replacements: [assignment,clicked,clicked], type: sequelize.QueryTypes.SELECT }).then(function(result){
 
-	// show assignments on Professor page
+			var data = {
+				comments:[]
+			}
+			
+			for(var i = 0 ; i < result.length ;i++){
+				var obj = {
+					text: result[i].comment,
+					commentDate: result[i].createdAt,
+					user: result[i].username,
+					startLine: result[i].startingLine,
+					endLine: result[i].endingLine
+				}
+				data.comments.push(obj);
+			}
+			res.json(data); 
+		})
+	});
+
+//posts comment to database
+app.post("/api/comments/:id/post",function(req,res){
+
+	var user = req.decoded.id;
+	var assignment = req.params.id;
+  var startLine = req.body.startLine
+  var endLine = req.body.endLine
+  var comment = req.body.comment
+
+  Comments.create({
+  	foreignAssignment:assignment,
+  	foreignUser: user,
+  	comment: comment,
+  	startingLine: startLine,
+  	endingLine: endLine
+	})
+
+  // send success
+	res.status(200).end();
+})
+
+// show assignments on Professor page
 	app.get("/api/professoroverview/assignments", function(req, res){
-      
-     
-
-      Assignments.findAll({}).then(function(result){
-          
+	  var instructor = req.decoded.username;
+      Assignments.findAll({
+      	where: {
+    			instructor: instructor
+    		},
+		}).then(function(result){ 
           res.json(result);
       })
   });
 
 	// show student info on professor page
   app.get("/api/professoroverview/students", function(req, res){
-      
-      
-
+      console.log(req.decoded);
+      var instructor = req.decoded.username;
       Users.findAll({
           where:{
-              role:"student"
-          }
+          	  role:"student",
+          	  instructorName:instructor
+          },
       }).then(function(result){
-          
           res.json(result);
       })
   });
 
+  //get comments for particular student when click on by instructor
+	app.post("/api/professoroverview/studentcomments", function(req, res){
+		// These 2 lines create a join between assignments and comments
+		Assignments.hasMany(Comments, {foreignKey: 'foreignAssignment'})
+		Comments.belongsTo(Assignments, {foreignKey: 'foreignAssignment'})
+
+		// this join allows us to grab comments, and all the assignment info
+		// relevant to that comment
+		Comments.findAll({
+			where:{
+				foreignUser: req.body.id
+			},
+			include: [Assignments]
+		}).then(function(result) {
+			res.json(result);
+		})
+	});
+
   // show assignments on student page
   app.get("/api/studentoverview/assignments", function(req, res){
-      
-      Assignments.findAll({}).then(function(result){
-          
+      var instructorName = req.decoded.instructorName;
+      Assignments.findAll({
+      	where:{
+      		instructor:instructorName
+      	}
+      }).then(function(result){     
           res.json(result);
       })
   });
