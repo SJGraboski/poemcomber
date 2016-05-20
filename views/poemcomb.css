@@ -1,0 +1,91 @@
+h1 {
+margin:0px;font-family: "le-monde-livre-classic-std-s"; font-size:400%;color:black;
+}
+
+h2{
+font-family: "le-monde-livre-classic-std-s";font-size: 300%
+}
+
+label{float:left;}
+/*body no longer has color*/
+body {background-color:#;}
+/*94d1d1*/
+a {background-color:#5bc0de;}
+/*45a1a1*/
+div {text-align: center;vertical-align: middle;}
+/*e3b39c*/
+p{width:100%;}
+
+nav{background-color:#5bc0de;color:black;float:right;}
+
+#nav,.nav-link, .navi-item, .linkbuttons{border-radius:10px;}
+
+.navbar-nav{border-color:black;border-width:3px;}
+
+a{color:black;}
+
+.pcombimg {width:30%;float:left;}
+
+/*height="50px"*/
+
+#mainbody {background-color:#;margin:50px;}
+
+.col {border-color:black;background-color:#;}
+
+.btn-info{margin:20px;}
+
+.btn-lg{width:200px;}
+
+.full-width{width:100%;height:100%;background-color: #cfe2e2;}
+
+.gray{background-color: #cccccc;margin:0px;}
+
+.container-fluid{padding:0px;background-color: #cccccc;}
+
+.jumbotron, .btn{border-width:3px; border-color:black; color:black;}
+
+.jumbotron {background-color:white;}
+
+.orange {background-color: #; border-width:3px; border-color:black; color:black;padding-top:20px;padding-bottom:20px;}
+
+.linkbuttons{float:right; height:22px;width:22px;margin:2px;}
+
+.wrapper{margin-top:30px;}
+
+.minitron {margin:45px;}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+form {padding-bottom:100px;}
+
+#submit{width:100%;margin:2px;height:60px;}
+
+.form-group-half {width:48%;float:left;}
+
+.littlepush{margin-right:4%;}
+
+/*still issues with small screens, need to convert to hamburger menu button*/
+@media screen and (max-width: 780px) {
+/*   .nav-item {float:right;}*/
+   .pcombimg{float:none;width:70%;}
+   nav{float:none;height:50px;}
+   .bg-faded{float:right;}
+   ul li {float:none;}
+   .jumbotron{background-color:transparent;}
+}
+
+/*probably don't need this screen size*/
+@media screen and (max-width: 1080px) {
+   .menu li {
+   width: 10%;
+   padding: 1%;
+   margin: 0;
+   border-left: 1px solid #fff;
+   border-right: 1px solid #333;
+   }
+}
+
