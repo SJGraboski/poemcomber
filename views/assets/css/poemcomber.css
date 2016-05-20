@@ -1,91 +1,248 @@
-h1 {
-margin:0px;font-family: "le-monde-livre-classic-std-s"; font-size:400%;color:black;
+/* Basic Rules */
+h1{
+  margin: 0px;
+  font-family: "le-monde-livre-classic-std-s"; 
+  font-size: 400%;
+  color:black;
 }
 
 h2{
-font-family: "le-monde-livre-classic-std-s";font-size: 300%
+  font-family: "le-monde-livre-classic-std-s";
+  font-size: 300%;
 }
 
-label{float:left;}
-/*body no longer has color*/
-body {background-color:#;}
-/*94d1d1*/
-a {background-color:#5bc0de;}
-/*45a1a1*/
-div {text-align: center;vertical-align: middle;}
-/*e3b39c*/
-p{width:100%;}
+label{
+  float: left;
+}
 
-nav{background-color:#5bc0de;color:black;float:right;}
+a{
+  background-color: #5bc0de;
+}
 
-#nav,.nav-link, .navi-item, .linkbuttons{border-radius:10px;}
+div{
+  vertical-align: middle;
+}
 
-.navbar-nav{border-color:black;border-width:3px;}
+p{
+  width: 100%;
+  font-size:16px;
+  line-height: 1.7em;
+}
 
-a{color:black;}
+/* navbar */
+nav{
+  background-color: #5bc0de;
+  color: black;
+  float: right;
+}
 
-.pcombimg {width:30%;float:left;}
+#nav,.nav-link, .navi-item, .linkbuttons{
+  border-radius: 10px;
+}
 
-/*height="50px"*/
+.navbar-nav{
+  border-color: black;
+  border-width: 3px;
+}
 
-#mainbody {background-color:#;margin:50px;}
+a{
+  color: black;
+}
 
-.col {border-color:black;background-color:#;}
+.pcombimg {
+  width: 30%;
+  float: left;
+}
 
-.btn-info{margin:20px;}
+#mainbody {
+}
 
-.btn-lg{width:200px;}
+.col {
+  border-color: black;
+}
 
-.full-width{width:100%;height:100%;background-color: #cfe2e2;}
+.buttonRow .btn-info{
+  margin-left: 20px;
+}
+.buttonRow {
+  margin-bottom:100px;
+}
 
-.gray{background-color: #cccccc;margin:0px;}
+div.buttonRow .login {
+  padding-left:20px;
+  padding-right:20px;
+  margin-left: 80px;
+  margin-right: 20px;
+}
 
-.container-fluid{padding:0px;background-color: #cccccc;}
+.btn-lg{
+  width: 200px;
+}
 
-.jumbotron, .btn{border-width:3px; border-color:black; color:black;}
+.full-width{
+  width: 100%;
+  height: 100%;
+  background-color: #cfe2e2;
+}
 
-.jumbotron {background-color:white;}
+.gray{
+  background-color: #cccccc;
+  margin: 0px;
+}
 
-.orange {background-color: #; border-width:3px; border-color:black; color:black;padding-top:20px;padding-bottom:20px;}
+.container-fluid{
+  padding: 0px;
+  background-color: #cccccc;
+}
 
-.linkbuttons{float:right; height:22px;width:22px;margin:2px;}
+.jumbotron, .btn{
+/*  border-width: 3px; 
+  border-color: black; 
+  color: black;*/
+}
 
-.wrapper{margin-top:30px;}
+.jumbotron {
+  background-color: white;
+}
 
-.minitron {margin:45px;}
+.orange {
+  border-width: 3px; 
+  border-color: black; 
+  color: black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
+.linkbuttons{
+  float: right; 
+  height: 22px;
+  width: 22px;
+  margin: 2px;
+}
+
+.wrapper{
+  margin-top: 30px;
+}
+
+.minitron {
+  margin: 45px;
+}
+
+.minitron h2 {
+  text-align: center
+}
+
+p.message {
+  text-align:center;
+  font-size: 18px;
+  margin-bottom: 0px;
+  margin-top: -5px;
+}
+
+p.message-start {
+  margin-top: 10px;
+}
+
+p.post-message{
+  margin-top: 10px;
+} 
 #footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-form {padding-bottom:100px;}
+form {
+  padding-bottom: 100px;
+}
 
-#submit{width:100%;margin:2px;height:60px;}
+#submit{
+  width: 100%;
+  margin: 2px;
+  height: 60px;
+}
 
-.form-group-half {width:48%;float:left;}
+.form-group-half {
+  width: 48%;
+  float: left;
+}
 
-.littlepush{margin-right:4%;}
+.littlepush{
+  margin-right: 4%;
+}
+#footer{
+  text-align:center;
+} 
 
+.modal h3 {
+  margin: 0;
+}
+
+@media screen and (max-width: 1200px) {
+  div.buttonRow .login {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 120px;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  div.buttonRow .login {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 135px;
+    margin-right: 20px;
+  }
+}
 /*still issues with small screens, need to convert to hamburger menu button*/
-@media screen and (max-width: 780px) {
-/*   .nav-item {float:right;}*/
-   .pcombimg{float:none;width:70%;}
-   nav{float:none;height:50px;}
-   .bg-faded{float:right;}
-   ul li {float:none;}
-   .jumbotron{background-color:transparent;}
+@media screen and (max-width: 769px) {
+/*   .nav-item {
+    float:right;
+    }*/
+   .pcombimg{
+     float: none;
+     width: 70%;
+   }
+   nav{
+     float: none;
+     height: 50px;
+   }
+   .bg-faded{
+     float: right;
+   }
+   ul li {
+     float: none;
+   }
+   .jumbotron{
+     background-color: transparent;
+   }
+  div.buttonRow .login {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .minitron p {
+    text-align: center;
+  }
+  .buttonRow .btn-info{
+    margin-left: 5px;
+  }
+  .buttonRow {
+    text-align:center;
+  }
+
 }
 
 /*probably don't need this screen size*/
 @media screen and (max-width: 1080px) {
-   .menu li {
-   width: 10%;
-   padding: 1%;
-   margin: 0;
-   border-left: 1px solid #fff;
-   border-right: 1px solid #333;
-   }
+  .menu li {
+    width: 10%;
+    padding: 1%;
+    margin: 0;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #333;
+  }
 }
 

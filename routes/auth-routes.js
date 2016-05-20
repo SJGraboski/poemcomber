@@ -63,12 +63,14 @@ module.exports = function(app){
 
         var username = req.body.username;
         var password = req.body.password;
+        var instructor = req.body.instructor
 
         // insert sequelize here to grab the username, password, role and latest from database
         Users.create({
                 username: username,
                 password: password,
-                role: "student"
+                role: "student",
+                instructorName: instructor
         }).then(function(result){
             console.log(result);
             var user = result.dataValues;
