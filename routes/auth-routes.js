@@ -95,6 +95,14 @@ module.exports = function(app){
         })
     })
 
+    // logout function
+    app.get("/api/logout", function(req, res){
+        // this simple command grabs the access token cookie, then deletes it.
+        new Cookies(req, res).set('access_token');
+        // send success to ajax
+        res.status(200).end();
+    })
+
     // the all command
     app.all('*', function(req, res, next){
         var token = new Cookies(req, res).get('access_token');

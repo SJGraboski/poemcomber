@@ -206,7 +206,6 @@ module.exports = function(app) {
     	} // save poem info into a data object
     }).then(function(result){
     	data = result.dataValues;
-    	console.log(result);
     	// try grabbing the file in the poem obj
     	try{
     		// save the poem itself to the data we'll shoot back

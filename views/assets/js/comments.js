@@ -131,7 +131,8 @@ function endSelect(ptag){
   endLine = ptag.attr("data-line");
   // if the user selects an endline that's less than the start line
   // kill the function.
-  if (endLine < startLine ){
+  console.log("S:" + startLine + ". E:" + endLine);
+  if (Number(endLine) < Number(startLine)){
     return false;
   }
   // grab the span
@@ -163,14 +164,12 @@ function submitComment(){
   // kill the function
   if (!clickedStart) {
     return false
-    // TODO: warning text
   }
 
   // if somehow the endline precedes the startline
   // kill the function
-  if (endLine < startLine && endLine != 0) {
+  if (Number(endLine) < Number(startLine) && endLine != 0) {
     return false
-    // TODO: warning text
   }
 
   // grab the comment
