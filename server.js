@@ -11,7 +11,7 @@ var path = require('path');
 var sm = require('sitemap')
 // Creates a sitemap object given the input configuration with URLs 
 var sitemap = sm.createSitemap({
-	hostname: 'http://example.com',
+	hostname: 'http://poemcomber.herokuapp.com',
       cacheTime: 600000,        // 600 sec - cache purge period 
       urls: [
         { url: '/',  changefreq: 'daily', priority: 1 }

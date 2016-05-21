@@ -10,6 +10,7 @@
 	<script src="https://use.typekit.net/wfb7ujx.js"></script>
 	<script>try{Typekit.load({ async: true });}catch(e){}</script>
 	<script src="/js/logout.js"></script>
+	<script src="/js/student.js"></script>
 </head>
 <body>
 
@@ -69,23 +70,6 @@
 		</div>
 	</div>
 	<!-- end footer -->
-
-<script type="text/javascript">
-function getAssignments(){
-		var currentURL = window.location.origin;
-		
-		$.get(currentURL + "/api/studentoverview/assignments", function(data){
-			console.log(data);
-			for(var i = 0 ; i < data.length ; i++){
-				var assignment = $('<div>');
-				assignment.append("<h4><a href='/comments/" + data[i].id + "'>" + data[i].title  + "</a><h4>")
-				$("#assignments").append(assignment);
-			}
-		
-		})
-}
-getAssignments();
-</script>
 
 </body>
 </html>
