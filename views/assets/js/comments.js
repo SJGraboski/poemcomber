@@ -7,8 +7,8 @@ function getPoem(modal, refresh){
 
     // place relevant data in the poem section
     var contentDiv = $('<div>').addClass("thePoem");
-    contentDiv.append('<h4>'+ result.title + '<h4>');
-    contentDiv.append('<h5>' + result.author + '<h5>');
+    contentDiv.append('<h4>'+ result.title + '</h4>');
+    contentDiv.append('<h5>' + result.author + '</h5>');
     contentDiv.append(result.poem);
 
     // if not modal version, place it in the regular spot
@@ -70,7 +70,6 @@ function getComments(ptag) {
   // make a post call with a success function 
   // that populates the comments with the comment found
   $.get(url, function(results){
-    console.log(results);
     // make a comments div
     var commentsDiv = $('<div>').addClass("CommentsSection")
     // get to comments array in the json
@@ -183,7 +182,6 @@ function submitComment(){
   // if the user hasn't entered a comment yet
   // kill the function
   if (!theComment) {
-    console.log("yeppers");
     return false;
   }
   // if there's data in there, make sure it's not empty spaces.
@@ -191,7 +189,6 @@ function submitComment(){
   else {
     theComment = theComment.trim();
     if (!theComment) {
-      console.log("yeppers");
       return false;
     }
   }
@@ -295,7 +292,6 @@ $(document).on('click', '#modalSubmit', function(e){
 $(document).on('click', function(e){
   var clicked = e.target.tagName;
   var theID = e.target.id;
-  console.log(theID);
   if(clicked != "SPAN" && clicked != "TEXTAREA" && theID != "#modalSubmit"  ){
     revertCounters();
     hideTooltips();

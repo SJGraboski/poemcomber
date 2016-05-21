@@ -50,7 +50,7 @@ module.exports = function(app){
             // Then send it to the user. This token will need to be used to access the API
             res.json({
                 success: true,
-                message: "Access granted. Proceed to the holy gateway of our API. Just be sure to use the token!",
+                message: "Access granted.",
                 token: token
             });
         }).catch(function(err) {
@@ -63,18 +63,15 @@ module.exports = function(app){
 
         var username = req.body.username;
         var password = req.body.password;
-        var instructor = req.body.instructor
 
         // insert sequelize here to grab the username, password, role and latest from database
         Users.create({
                 username: username,
                 password: password,
                 role: "student",
-                instructorName: instructor
+                instructorName: "Instructor"
         }).then(function(result){
-            console.log(result);
             var user = result.dataValues;
-            console.log(user);
             // create JSON token
             var token = jwt.sign(user, app.get('jwtSecret'), {
                 expiresIn: 1440 // Token is given but will expire in 24 hours (requiring a re-login)
@@ -87,7 +84,7 @@ module.exports = function(app){
             // Then send it to the user. This token will need to be used to access the API
             res.json({
                 success: true,
-                message: "Access granted. Proceed to the holy gateway of our API. Just be sure to use the token!",
+                message: "Access granted.",
                 token: token
             });
             // send response
@@ -105,14 +102,10 @@ module.exports = function(app){
         // verify the token
         jwt.verify(token, app.get('jwtSecret'), function(err, decoded) {
             if (err) {
-                console.log("Not yet");
-                console.log(decoded)
                 return res.json({success: false, message: "access denied"})
             }
             else {
-                console.log("looks legit!")
                 req.decoded = decoded;
-                console.log(decoded);
                 next();
             }
         })
