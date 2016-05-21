@@ -202,9 +202,31 @@ form {
 p.a_summary {
   margin-bottom: 50px;
 }
+
 #commentSection{
   margin-top: 10px
 }
+p.commentAuthor{
+  font-weight: bold;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 1px;
+  padding-bottom: 2px;
+  display:block;
+}
+
+p.commentText{
+  font-weight: normal;
+  margin-bottom: 1px;
+  margin-left: 10px;
+  line-height: 1.4em;
+  display:block;
+}
+
+p.commentDate {
+  font-size: 10px;
+  margin-left: 15px;
+}
+
 @media screen and (max-width: 1200px) {
   div.buttonRow .login {
     padding-left: 20px;

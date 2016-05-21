@@ -78,23 +78,23 @@ function getComments(ptag) {
       var c_text = $('<p>').addClass('commentText')
                    .text("\"" + comments[i].text + "\"");
       var c_user = $('<p>').addClass('commentAuthor')
-                   .html("Comment by <span>" + comments[i].user + "</span>");
-      var c_line = $('<p>').addClass('commentLines');
+                   .text(comments[i].user+ ", ");
 
       // check whether the comment is for more than 1 line
       if(comments[i].startLine == comments[i].endLine) {
         // if it's only for one line, state which line
-        c_line.text("Line " + comments[i].startLine);
+        c_user.append("line " + comments[i].startLine);
       }
       else {
         // if it's for more than one line, state which lines
-        c_line.text("Lines " + comments[i].startLine + "-" + comments[i].endLine);
+        c_user.append("lines " + comments[i].startLine + "-" + comments[i].endLine);
       }
 
       // format timestamp for comment date
-      var c_date = moment(comments[i].commentDate).format("hh:mma - MMMM DD, YYYY");
+      var c_date = $('<p>').addClass('commentDate')
+                   .text("- " + moment(comments[i].commentDate).format("hh:mma - MMMM DD, YYYY"));
       // father the div
-      aComment.append(c_user, c_date, c_text, c_line);
+      aComment.append(c_user, c_text, c_date);
       // append it to the main comment div
       commentsDiv.append(aComment);
     }
