@@ -190,6 +190,11 @@ form {
   margin: 0;
 }
 
+/* Instructor Overview page */
+div#studentList {
+  margin-bottom: 100px;
+}
+
 /* Student Overview page */
 div.studentBody{
   text-align: center;
@@ -220,7 +225,8 @@ p.a_summary {
 }
 
 #commentSection{
-  margin-top: 10px
+  margin-top: 10px;
+  margin-bottom: 100px;
 }
 p.commentAuthor{
   font-weight: bold;
@@ -241,6 +247,10 @@ p.commentText{
 p.commentDate {
   font-size: 10px;
   margin-left: 15px;
+}
+
+#poem {
+  margin-bottom: 120px;
 }
 
 #modalSubmit {

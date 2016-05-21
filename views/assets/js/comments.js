@@ -93,14 +93,16 @@ function getComments(ptag) {
 
       // format timestamp for comment date
       var c_date = $('<p>').addClass('commentDate')
-                   .text("- " + moment(comments[i].commentDate).format("hh:mma - MMMM DD, YYYY"));
+                   .text("- " + moment(comments[i].commentDate).format("MMMM DD, YYYY - hh:mma "));
       // father the div
       aComment.append(c_user, c_text, c_date);
       // append it to the main comment div
       commentsDiv.append(aComment);
     }
-    // with all comment divs collected, innerHTML it to the page
-    $('#commentSection').html(commentsDiv);
+    // with all comment divs collected, clear out the commentSection with fadeout
+    $('#commentSection').empty(); 
+    // then append it to the page with fadein
+    $(commentsDiv).hide().appendTo('#commentSection').fadeIn(500);
   });
 }
 
