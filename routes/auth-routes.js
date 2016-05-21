@@ -6,7 +6,7 @@
 var jwt = require('jsonwebtoken');
 var Cookies = require('cookies');
 
-// bring in appropos models
+// bring in apropos models
 var Users = require('../model/user.js');
 var Comments = require('../model/comments.js');
 var Assignments = require('../model/assignments.js');

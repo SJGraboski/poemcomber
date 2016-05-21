@@ -37,7 +37,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // set up static content
-var staticContentFolder = __dirname + '/views';
+var staticContentFolder = __dirname + '/views/assets';
 console.log(staticContentFolder);
 app.use(express.static(staticContentFolder));
 

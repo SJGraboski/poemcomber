@@ -1,6 +1,7 @@
 function getPoem(modal, refresh){
   // get url path (which we use in the api call)
-  var currentURL = window.location.pathname;
+  var currentURL = getURLPath();
+  console.log(currentURL);
 
   // make the call
   $.get('/api' + currentURL , function(result){
@@ -60,7 +61,7 @@ function getComments(ptag) {
   var line = ptag.attr('data-line');
 
   // grab the current window path for the api call ('/comments/:id')
-  var currentURL = window.location.pathname;
+  var currentURL = getURLPath();
   // make the api url
   var url = '/api' + currentURL + '/grab/' + line;
   // make a post call with a success function 
@@ -200,7 +201,7 @@ function submitComment(){
   }
 
   // now grab the url's path
-  var currentURL = window.location.pathname;
+  var currentURL = getURLPath();
 
   // then make the url for the api 
   var url = '/api' + currentURL + "/post";
@@ -218,9 +219,23 @@ function submitComment(){
     // and refresh the poem on the page
     getPoem(false, true);
   });
+}
 
+// get url path (which we use in the api call)
+function getURLPath() {
+  // grab the path
+  console.log("ok")
+  var currentURL = window.location.pathname;
 
-
+  console.log(currentURL);
+  // if there's a slash at the end, get rid of it.
+  // otherwise we won't be able to call the api.
+  if (currentURL[(currentURL.length - 1)] == "/") {
+    currentURL = currentURL.slice(0, -1);
+  }
+  console.log(currentURL);
+  // return it
+  return currentURL;
 }
 
 function revertCounters() {
@@ -238,7 +253,6 @@ function hideTooltips() {
 
   // remove all apropos attributes
   spans.tooltip('destroy');
-
 }
 
 // calls

@@ -1,13 +1,11 @@
 // logout function
 function logout() {
-	$.get("/api/logout", function(){
-		window.location.replace("/");
+	$.get("/logout", function(){
+		window.location.replace("/overview");
 	})
 }
 
-
-
-// document call 
+// call 
 $(document).on("click", "#logout", function(){
 	logout();
 })
