@@ -17,15 +17,11 @@ function getPoem(modal, refresh){
 
       // if not a poem refresh, ignore assignment portion, but not comments
       if (!refresh) {
-        // format timestamp
-        result.createdAt = moment(result.createdAt).format("MMMM DD, YYYY");
 
+        console.log(result);
         // place relevant data in the assignment summary section
         var assignmentDiv = $('<div>');
-        assignmentDiv.append('<p>' + result.summary + '</p>');
-        assignmentDiv.append('<p>' + result.createdAt + '</p>');
-
-
+        assignmentDiv.append('<p class="a_summary">' + result.summary + '</p>');
         $('#assignmentSection').html(assignmentDiv);
       }
 

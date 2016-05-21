@@ -20,6 +20,11 @@ div{
   vertical-align: middle;
 }
 
+div.assignmentSection{
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
 p{
   width: 100%;
   font-size:16px;
@@ -182,6 +187,23 @@ form {
 
 .highlighted span:hover {
   background-color: #ffff4d;
+}
+
+.thePoem {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+#poemBody {
+  margin-top:20px;
+  margin-left:0px;
+}
+
+p.a_summary {
+  margin-bottom: 50px;
+}
+#commentSection{
+  margin-top: 10px
 }
 @media screen and (max-width: 1200px) {
   div.buttonRow .login {
