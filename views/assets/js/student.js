@@ -1,3 +1,4 @@
+
 // get assignments on page
 function getAssignments(){
 		// get current url

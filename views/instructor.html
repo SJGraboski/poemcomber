@@ -9,7 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="/css/poemcomber.css">
 	<script src="https://use.typekit.net/wfb7ujx.js"></script>
 	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+	<!-- Custom Scripts -->
 	<script src="/js/logout.js"></script>
+	<script src="/js/instructor.js"></script>
 </head>
 <body>
 
@@ -50,11 +52,10 @@
 		</div>
 
 		<!-- clears the floats from previous column -->
-		<div style="clear:both"></div>
 		<!-- header ends -->
 		<!-- mainbody -->
 
-		<div style="text-align:center;"><h2>Instructor Dashboard</h2></div>
+		<div class="instructorHead"><h2>Instructor Dashboard</h2></div>
 
 		<div class="col col-lg-8">
 			
@@ -94,72 +95,7 @@
 
 <script type="text/javascript">
 
-function getAssignments(){
-		var currentURL = window.location.origin;
 
-		
-
-		$.get(currentURL + "/api/professoroverview/assignments", function(data){
-			
-			console.log("Assignment");
-			console.log(data);
-
-			for(var i = 0 ; i < data.length ; i++){
-
-				var assignment = $('<div>');
-				assignment.append("<a href='/comments/" + data[i].id + "/'>" + data[i].title  + 
-					" (" + data[i].author +")</a>")
-				$("#assignments").append(assignment);
-			}
-		
-
-		})
-}
-function getStudents(){
-		var currentURL = window.location.origin;
-
-		
-		var dataArr = [];
-		$.get(currentURL + "/api/professoroverview/students", function(data){
-			console.log(data);
-				dataArr = data;
-		$.each(dataArr, function(i){
-					var id = dataArr[i].id;
-					var obj = {"id": id };
-			$.post(currentURL + "/api/professoroverview/studentcomments", obj , function(c_data){
-				console.log(i);
-				var student = $('<div class="students" data-id=' + dataArr[i].id +'>');
-				student.append("<h4>" + dataArr[i].username  + "<h4>");
-				if (c_data.length > 1) {
-					var list = $('<ul>');
-					for (var j = 0; j < c_data.length; j++){
-						list.append("<li><a href='/comments/" + c_data[j].assignment.id + "'>"  +
-												c_data[j].assignment.title + "</a>: \"" + c_data[j].comment + "\"</li>");
-					}
-					student.append(list);
-				}
-				$("#students").append(student);
-			})
-		})			
-	})
-	}
-
- $(document).on('click', '.students', function(){
- 	
- 	var currentURL = window.location.origin;
- 	var id = $(this).attr('data-id');
- 	var obj = {id:id };
-
-
-
- 
- 	console.log("test");
- 	console.log(data);
-})
-
-
-getAssignments();
-getStudents();
 </script>
 
 </body>

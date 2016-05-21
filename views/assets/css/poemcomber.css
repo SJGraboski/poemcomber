@@ -200,6 +200,10 @@ div.studentBody{
   text-align: center;
 }
 
+.instructorHead h2 {
+  text-align: center;
+}
+
 /* Comments Page */
 .highlighted span {
   background-color: #e2e2e2;

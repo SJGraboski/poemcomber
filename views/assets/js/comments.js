@@ -1,3 +1,6 @@
+// comments.js
+
+// get the poem and display it on the comments page
 function getPoem(modal, refresh){
   // get url path (which we use in the api call)
   var currentURL = getURLPath();
@@ -19,7 +22,6 @@ function getPoem(modal, refresh){
       // if not a poem refresh, ignore assignment portion, but not comments
       if (!refresh) {
 
-        console.log(result);
         // place relevant data in the assignment summary section
         var assignmentDiv = $('<div>');
         assignmentDiv.append('<p class="a_summary">' + result.summary + '</p>');
@@ -28,8 +30,10 @@ function getPoem(modal, refresh){
 
       // container for lines that need highlights (designates comment)
       var commented = [];
+
       // get range for each comment in the comment section
       for (var i = 0; i < result.comments.length; i++) {
+
         // save the start and end lines in vars
         var start = result.comments[i].startingLine;
         var end = result.comments[i].endingLine;
@@ -48,6 +52,7 @@ function getPoem(modal, refresh){
         highlight.addClass('highlighted');
       }
     }
+
     // otherwise put it in the modal, without comments and
     // without adding anything into the assignment part of the page
     else {
@@ -56,25 +61,34 @@ function getPoem(modal, refresh){
   });
 }
 
+// grab comments when a highlighted line is clicked
 function getComments(ptag) {
+
   // grab the line from the data-line attr, as a string
   var line = ptag.attr('data-line');
 
   // grab the current window path for the api call ('/comments/:id')
   var currentURL = getURLPath();
+
   // make the api url
   var url = '/api' + currentURL + '/grab/' + line;
+
   // make a post call with a success function 
   // that populates the comments with the comment found
   $.get(url, function(results){
+
     // make a comments div
     var commentsDiv = $('<div>').addClass("CommentsSection")
+
     // get to comments array in the json
     var comments = results.comments;
+
     // go through each comment obj in comment array
     for (var i =0; i < comments.length; i++){
+
       // make a div for one comment
       var aComment = $('<div>').addClass('comments');
+
       // save relevant comment info
       var c_text = $('<p>').addClass('commentText')
                    .text("\"" + comments[i].text + "\"");
@@ -83,10 +97,12 @@ function getComments(ptag) {
 
       // check whether the comment is for more than 1 line
       if(comments[i].startLine == comments[i].endLine) {
+
         // if it's only for one line, state which line
         c_user.append("line " + comments[i].startLine);
       }
       else {
+
         // if it's for more than one line, state which lines
         c_user.append("lines " + comments[i].startLine + "-" + comments[i].endLine);
       }
@@ -94,27 +110,35 @@ function getComments(ptag) {
       // format timestamp for comment date
       var c_date = $('<p>').addClass('commentDate')
                    .text("- " + moment(comments[i].commentDate).format("MMMM DD, YYYY - hh:mma "));
+      
       // father the div
       aComment.append(c_user, c_text, c_date);
+      
       // append it to the main comment div
       commentsDiv.append(aComment);
     }
+    
     // with all comment divs collected, clear out the commentSection with fadeout
     $('#commentSection').empty(); 
+    
     // then append it to the page with fadein
     $(commentsDiv).hide().appendTo('#commentSection').fadeIn(500);
   });
 }
 
+// display the poem in the modal
 function modalPoem() {
   // first, we grab the poem and place it in the modal
   getPoem(true, false);
 }
 
+// select the startline
 function startSelect(ptag){
+  
   // grab the line
   startLine = ptag.attr("data-line");
 
+  // make a span tag
   var span = ptag.find('span');
 
   // add tooltip to left
@@ -129,9 +153,12 @@ function startSelect(ptag){
 
 }
 
+// select the endline
 function endSelect(ptag){
+  
   // grab the line
   endLine = ptag.attr("data-line");
+  
   // if the user selects an endline that's less than the start line
   // kill the function.
   console.log("S:" + startLine + ". E:" + endLine);
@@ -162,6 +189,7 @@ function endSelect(ptag){
   clickedEnd++;
 }
 
+// submit a comment
 function submitComment(){
   // if the user hasn't clicked a line on the comment yet, 
   // kill the function
@@ -226,31 +254,32 @@ function submitComment(){
 // get url path (which we use in the api call)
 function getURLPath() {
   // grab the path
-  console.log("ok")
   var currentURL = window.location.pathname;
 
-  console.log(currentURL);
   // if there's a slash at the end, get rid of it.
   // otherwise we won't be able to call the api.
   if (currentURL[(currentURL.length - 1)] == "/") {
     currentURL = currentURL.slice(0, -1);
   }
-  console.log(currentURL);
+
   // return it
   return currentURL;
 }
 
 function revertCounters() {
-    // make clickedStart and clickedEnd false;
+  // make clickedStart and clickedEnd false;
   clickedStart = clickedEnd = false;
 
   // revert endLine and startLine back to 0 
   endLine = startLine = 0;
 }
 
+// hide the tooltips
 function hideTooltips() {
   // select all span tags with tooltips
   var spans = $("[data-toggle='tooltip']");
+
+  // hide them
   spans.tooltip({trigger: 'manual'}).tooltip('hide');
 
   // remove all apropos attributes
@@ -295,15 +324,24 @@ $(document).on('click', '#modalPoem .poemLine', function(e){
 // on click comment submit button in modal
 $(document).on('click', '#modalSubmit', function(e){
   submitComment();
+  // prevent refresh
   return false;
 })
 
 // When clicking anywhere that isn't a poem line in the modal
 // revert the counter and hide all tooltips
 $(document).on('click', function(e){
+
+  // grab the tag name
   var clicked = e.target.tagName;
+
+  // grab the id
   var theID = e.target.id;
+
+  // if the user clicks anywhere that isn't a span tag textarea or the modal
   if(clicked != "SPAN" && clicked != "TEXTAREA" && theID != "#modalSubmit"  ){
+    
+    // revert everything
     revertCounters();
     hideTooltips();
   }

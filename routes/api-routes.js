@@ -1,5 +1,6 @@
 /* Api routes 
  * ========== */
+
  // require express
 var jwt = require('jsonwebtoken');
 // require sequelize
@@ -20,17 +21,22 @@ var Assignments = require('../model/assignments.js');
 // poemConvert:  takes poem data and uses regex 
 // to add proper element tags and class names "</span></p><br /><p><span>");
 function poemConvert(excerpt) {
+
 	// replace all instances of double-line breaks with <br />\n
 	excerpt = excerpt.replace(/\n{2,}/g, function(match) {
+
 		// count occurrences of \n
 		var occurrences = match.match(/\n/g).length;
+
 		// substract one from occurrences to get number of <br /> tags
 		var brs = "";
 		for (var i = 0; i < (occurrences - 1); i++) {
 			brs += "<br />";
 		}
+
 		// construct the string
 		var replacement = "</span></p>" + brs + "<p><span>";
+
 		// return it
 		return replacement;
 	})
@@ -43,12 +49,19 @@ function poemConvert(excerpt) {
 
 	// add data-lines to each p-tag, with help from incrementing i
 	var i = 1;
+
+	// replace every p-tag with one that has the class and datalines we need
 	excerpt = excerpt.replace(/<p>/g, function(match){
 		replacement = "<p class='poemLine' data-line='" + i + "'>";
+		
+		// increment i for the next line
 		i++;
+
 		// return the replacement
 		return replacement;
 	})
+	
+	// and return the excerpt
 	return excerpt;
 }
 
@@ -189,6 +202,7 @@ module.exports = function(app) {
 				})
 			}
 			else {
+				// log errors
 				console.log("Error submitting file: " + err);
 			}
 		})
@@ -197,8 +211,10 @@ module.exports = function(app) {
 // 2: load the poem on the comments page
 // =====================================
 	app.get("/api/comments/:id", function(req, res) {
+		
 		// poem id is from the url
 		var poemID = req.params.id;
+		
 		// make the call for the poem info
     Assignments.findOne({
     	where: {
@@ -206,8 +222,10 @@ module.exports = function(app) {
     	} // save poem info into a data object
     }).then(function(result){
     	data = result.dataValues;
+    	
     	// try grabbing the file in the poem obj
     	try{
+    		
     		// save the poem itself to the data we'll shoot back
     		data.poem = fs.readFileSync(path.join(__dirname + data.textfileroute), "utf-8");
 
@@ -217,6 +235,7 @@ module.exports = function(app) {
     		catch(err) {
     		if (err) throw err;
     	}
+    	// find all comments start and end lines
     	Comments.findAll({
     		where: {
     			foreignAssignment: poemID
@@ -231,32 +250,40 @@ module.exports = function(app) {
 // 3: Show comments when user click highlights
 // ===========================================
 	app.get("/api/comments/:id/grab/:line", function(req, res) {
+		
 		// first grab the number of the line clicked
 		var clicked = req.params.line; 
+		
 		// then, grab assignment id from the url path
 		var assignment = req.params.id
+		
 		// get the info from the relevant db's 
 		var q1 = "SELECT * FROM comments INNER JOIN users ON comments.foreignUser = users.id ";
 		var q2 = "WHERE comments.foreignAssignment = ? AND ? <= comments.endingLine AND ? >= comments.startingLine " +
 							"ORDER BY comments.startingLine ASC, comments.endingLine ASC";
 		var query = q1 + q2;
 		
+		// send the query
 		sequelize.query(query,{ replacements: [assignment,clicked,clicked], type: sequelize.QueryTypes.SELECT }).then(function(result){
 
+			// make a data obj with comments
 			var data = {
 				comments:[]
 			}
 			
+			// for each row
 			for(var i = 0 ; i < result.length ;i++){
+				// fill a new object with this data
 				var obj = {
 					text: result[i].comment,
 					commentDate: result[i].createdAt,
 					user: result[i].username,
 					startLine: result[i].startingLine,
 					endLine: result[i].endingLine
-				}
+				} // push this to the data array
 				data.comments.push(obj);
 			}
+			// send the array
 			res.json(data); 
 		})
 	});
@@ -264,12 +291,14 @@ module.exports = function(app) {
 //posts comment to database
 app.post("/api/comments/:id/post",function(req,res){
 
+	// save all of the info from the cookie, body, and url
 	var user = req.decoded.id;
 	var assignment = req.params.id;
   var startLine = req.body.startLine
   var endLine = req.body.endLine
   var comment = req.body.comment
 
+  // use that data to create the comment
   Comments.create({
   	foreignAssignment:assignment,
   	foreignUser: user,
@@ -284,11 +313,13 @@ app.post("/api/comments/:id/post",function(req,res){
 
 // show assignments on Professor page
 	app.get("/api/professoroverview/assignments", function(req, res){
+		// grab the instructor from the instructor's username in cookie
 	  var instructor = req.decoded.username;
-      Assignments.findAll({
-      	where: {
-    			instructor: instructor
-    		},
+	  	// find the instructors assignments
+    Assignments.findAll({
+    	where: {
+  			instructor: instructor
+  		},
 		}).then(function(result){ 
           res.json(result);
       })
@@ -296,16 +327,17 @@ app.post("/api/comments/:id/post",function(req,res){
 
 	// show student info on professor page
   app.get("/api/professoroverview/students", function(req, res){
-      console.log(req.decoded);
-      var instructor = req.decoded.username;
-      Users.findAll({
-          where:{
-          	  role:"student",
-          	  instructorName:instructor
-          },
-      }).then(function(result){
-          res.json(result);
-      })
+		// grab the instructor from the instructor's username in cookie
+    var instructor = req.decoded.username;
+    // find all students
+    Users.findAll({
+        where:{
+        	  role:"student",
+        	  instructorName:instructor
+        },
+    }).then(function(result){
+        res.json(result);
+    })
   });
 
   //get comments for particular student when click on by instructor
@@ -328,6 +360,7 @@ app.post("/api/comments/:id/post",function(req,res){
 
   // show assignments on student page
   app.get("/api/studentoverview/assignments", function(req, res){
+  		// grab the instructor from the instructor's username in cookie
       var instructorName = req.decoded.instructorName;
       Assignments.findAll({
       	where:{
