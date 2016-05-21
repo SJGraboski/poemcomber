@@ -224,6 +224,10 @@ div.studentBody{
   margin-left:0px;
 }
 
+#poemBody p {
+  line-height: 1.2em;
+}
+
 p.a_summary {
   margin-bottom: 50px;
 }
