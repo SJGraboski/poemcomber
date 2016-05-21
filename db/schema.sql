@@ -3,31 +3,42 @@ use poem_comb;
 
 create table users
 	(
-		id int auto_increment not null unique,
-		username varchar(255) not null unique,
-		password varchar(255) not null unique
-		role varchar(10) not null,
-		primary key(id)
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	  `role` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	  `instructorName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	  `createdAt` datetime NOT NULL,
+	  `updatedAt` datetime NOT NULL,
+	  PRIMARY KEY (`id`),
+	  UNIQUE KEY `id` (`id`),
+	  UNIQUE KEY `users_id_unique` (`id`),
+	  UNIQUE KEY `username` (`username`),
+	  UNIQUE KEY `users_username_unique` (`username`)
 	);
 
 create table assignments
 	(
-		id int auto_increment not null,
-		textfileroute varchar(255) not null,
-		title varchar(255) not null,
-		summary varchar(2000),
-		date timestamp not null,
-		primary key (id)
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `textfileroute` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+	  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+	  `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+	  `summary` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	  `instructor` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	  `createdAt` datetime NOT NULL,
+	  `updatedAt` datetime NOT NULL,
+	  PRIMARY KEY (`id`)
 	);
 
 create table comments
 	(
-		id int auto_increment not null,
-		foreignAssignment int not null,
-		foreignUser int not null,
-		comment varchar(4000) not null,
-		startingLine int not null,
-		endingLine int not null,
-		date timestamp not null,
-		primary key (id)
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `foreignAssignment` int(11) NOT NULL,
+	  `foreignUser` int(11) NOT NULL,
+	  `comment` varchar(4000) COLLATE utf8_unicode_ci NOT NULL,
+	  `startingLine` int(11) NOT NULL,
+	  `endingLine` int(11) NOT NULL,
+	  `createdAt` datetime NOT NULL,
+	  `updatedAt` datetime NOT NULL,
+	  PRIMARY KEY (`id`)
 	);
