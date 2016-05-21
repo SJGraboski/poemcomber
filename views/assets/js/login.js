@@ -21,6 +21,7 @@ function login(register){
 	// register
 	if (register) {
 		$.post(currentURL + '/api/register', data, function(result){
+			// send them to overview
 			window.location.replace("/overview");
 			return false;
 		})
@@ -28,6 +29,7 @@ function login(register){
 	// login
 	else {
 		$.post(currentURL + '/api/login', data, function(result){
+			// send them to overvier
 			window.location.replace("/overview");
 			return false;
 		})

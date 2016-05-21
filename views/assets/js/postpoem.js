@@ -24,7 +24,7 @@ function grabpoem() {
 	// make the ajax call to the api
 	$.post(currentURL + "/api/postpoem", data, function(){
 		// send us back to the overview on success
-		
+		window.location.replace("/overview");
 	});
 	return false;
 }
