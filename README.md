@@ -1,8 +1,8 @@
-# poemcomber
+# PoemComber
 
-Poemcomber lets instructors submit poetry that students can comment on. This creates a collaborative environment for literary analysis.
+PoemComber lets instructors submit poetry for students to comment out. This creates a collaborative environment for literary analysis.
 
-Incorporates mySQL, Javascripte, jQuery, Node, Bootstrap, Regex, Json Web Tokens.
+Incorporates MySQL, JavaScript, jQuery, Node.js, Express, Bootstrap, Regex and JSON Web Tokens.
 
 https://poemcomber.herokuapp.com/
 
