@@ -38,7 +38,7 @@ function getStudents(){
 				// the data is now in the data array
 				dataArr = data;
 				
-				// for each entry in the array
+		// for each entry in the array
 		$.each(dataArr, function(i){
 					
 			// save the id
