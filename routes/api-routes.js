@@ -335,12 +335,15 @@ app.post("/api/comments/:id/post",function(req,res){
         	  role:"student",
         	  instructorName:instructor
         },
+        order: {
+        	username: 'DESC'
+        }
     }).then(function(result){
         res.json(result);
     })
   });
 
-  //get comments for particular student when click on by instructor
+  // get comments for particular student when click on by instructor
 	app.post("/api/professoroverview/studentcomments", function(req, res){
 		// These 2 lines create a join between assignments and comments
 		Assignments.hasMany(Comments, {foreignKey: 'foreignAssignment'})
