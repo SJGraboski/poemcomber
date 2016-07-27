@@ -335,9 +335,7 @@ app.post("/api/comments/:id/post",function(req,res){
         	  role:"student",
         	  instructorName:instructor
         },
-        order: {
-        	username: 'DESC'
-        }
+        order: 'username ASC'
     }).then(function(result){
         res.json(result);
     })
