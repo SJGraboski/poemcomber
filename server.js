@@ -27,8 +27,12 @@ var xml = sitemap.toString();
 var app = express();
 var PORT = process.env.PORT || 8000;
 
+// jwt_secret
+var jwt_secret = process.env.JWT_SECRET || "CodingsCool";
+
 // set json webtokensecret
-app.set('jwtSecret', 'CODINGROCKr');
+console.log("jwt: " + jwt_secret);
+app.set('jwtSecret', jwt_secret);
 
 // bodyparser middleware for Express
 app.use(bodyParser.json());
