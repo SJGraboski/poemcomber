@@ -11,9 +11,14 @@ function login(register){
 			password: $('#log_password').val().trim()
 		}
 	}
-	// validates
+	// validate that something is there
 	if (data.username == "" || data.password == "") {
 		alert("You didn't enter a username or password!");
+		return false;
+	}
+	// validate that the password length is more than 6 when registering
+	else if (data.password.length < 6 && register) {
+		alert("Your password must be more than 6 chars");
 		return false;
 	}
 	// Grab the URL of the website

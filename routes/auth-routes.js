@@ -6,6 +6,7 @@
 var jwt = require('jsonwebtoken');
 var Cookies = require('cookies');
 var bcrypt = require('bcrypt');
+var validator = require('validator')
 
 // bring in apropos models
 var Users = require('../model/user.js');
@@ -45,7 +46,7 @@ module.exports = function(app){
                 if (err) throw err;
                 // if the pw doesn't match, send an error
                 if (passRes === false) {
-                    res.status(400).json("{'error':'password doesn't match}");
+                    res.status(403).json("{'error':'password doesn't match}");
                 }
                 // otherwise, proceed
                 else {
@@ -91,56 +92,65 @@ module.exports = function(app){
         var username = req.body.username;
         var password = req.body.password;
 
-        // bcrypt hashing
-        const saltRounds = 10;
+        // validate data
+        if (!validator.isLength(username, {min: 2, max: undefined}) || !validator.isLength(password, {min: 6, max: undefined})){
+            // if data isn't valid, don't accept it
+            res.status(403).json("{'error':'bad pass or username'");
+        }
+        else {
 
-        // hash the password
-        bcrypt.hash(password, saltRounds, function(err, hash){
-            // throw any errors
-            if (err) throw error; 
+            // bcrypt hashing
+            const saltRounds = 10;
 
-            // insert sequelize here to grab the username, hash,
-            // role and latest from database
-            Users.create({
-                    username: username,
-                    password: hash,
-                    role: "student",
-                    instructorName: "Instructor"
+            // hash the password
+            bcrypt.hash(password, saltRounds, function(err, hash){
+                // throw any errors
+                if (err) throw error; 
+
+                // insert sequelize here to grab the username, hash,
+                // role and latest from database
+                Users.create({
+                        username: username,
+                        password: hash,
+                        role: "student",
+                        instructorName: "Instructor"
+                })
+                // after creating the user, grab the result for our web token
+                .then(function(result){
+                    // get the right user data from the result
+                    var user = {
+                        username: result.dataValues.username,
+                        role: result.dataValues.role,
+                        instructorName: result.dataValues.instructorName
+                    };
+
+                    // create JSON token
+                    var token = jwt.sign(user, app.get('jwtSecret'), {
+                        expiresIn: 86400 // Token is given but will expire in 24 hours (requiring a re-login)
+                    });
+
+                    // create new cookie and log user in
+                    new Cookies(req, res).set('access_token', token, {
+                        httpOnly: true,
+                        secure: false
+                    });
+
+                    // Then send it to the user. This token will need to be used to access the API
+                    res.json({
+                        success: true,
+                        message: "Access granted.",
+                        token: token
+                    });
+
+                }).catch(function(err) {
+                    // log errors
+                    console.log(err);
+                    // send error message
+                    res.status(403).json("{'error':'" + err + "'");
+                })
             })
-            // after creating the user, grab the result for our web token
-            .then(function(result){
-                // get the right user data from the result
-                var user = {
-                    username: result.dataValues.username,
-                    role: result.dataValues.role,
-                    instructorName: result.dataValues.instructorName
-                };
+        }
 
-                // create JSON token
-                var token = jwt.sign(user, app.get('jwtSecret'), {
-                    expiresIn: 86400 // Token is given but will expire in 24 hours (requiring a re-login)
-                });
-
-                // create new cookie and log user in
-                new Cookies(req, res).set('access_token', token, {
-                    httpOnly: true,
-                    secure: false
-                });
-
-                // Then send it to the user. This token will need to be used to access the API
-                res.json({
-                    success: true,
-                    message: "Access granted.",
-                    token: token
-                });
-
-            }).catch(function(err) {
-                // log errors
-                console.log(err);
-                // send error message
-                res.status(403).json("{'error':'" + err + "'");
-            })
-        })
     })
 
 
