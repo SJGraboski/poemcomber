@@ -73,7 +73,7 @@ function getComments(ptag) {
   // make the api url
   var url = '/api' + currentURL + '/grab/' + line;
 
-  // make a post call with a success function 
+  // make a get call with a success function 
   // that populates the comments with the comment found
   $.get(url, function(results){
 
@@ -107,6 +107,7 @@ function getComments(ptag) {
         c_user.append("lines " + comments[i].startLine + "-" + comments[i].endLine);
       }
 
+      console.log(comments[i].commentDate);
       // format timestamp for comment date
       var c_date = $('<p>').addClass('commentDate')
                    .text("- " + moment(comments[i].commentDate).format("MMMM DD, YYYY - hh:mma "));

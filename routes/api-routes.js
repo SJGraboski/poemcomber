@@ -258,7 +258,7 @@ module.exports = function(app) {
 		var assignment = req.params.id
 		
 		// get the info from the relevant db's 
-		var q1 = "SELECT * FROM comments INNER JOIN users ON comments.foreignUser = users.id ";
+		var q1 = "SELECT *, comments.createdAt FROM comments JOIN users ON comments.foreignUser = users.id ";
 		var q2 = "WHERE comments.foreignAssignment = ? AND ? <= comments.endingLine AND ? >= comments.startingLine " +
 							"ORDER BY comments.startingLine ASC, comments.endingLine ASC";
 		var query = q1 + q2;
@@ -266,6 +266,7 @@ module.exports = function(app) {
 		// send the query
 		sequelize.query(query,{ replacements: [assignment,clicked,clicked], type: sequelize.QueryTypes.SELECT }).then(function(result){
 
+			console.log(result);
 			// make a data obj with comments
 			var data = {
 				comments:[]

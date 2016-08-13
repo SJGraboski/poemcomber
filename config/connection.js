@@ -5,40 +5,22 @@
 // Dependencies
 var Sequelize = require('sequelize');
 
-// source: obj containing our connections
-var source = {
-	localhost: {
-		port: 3306,
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'poem-comb'
-	},
 
-	jawsDB: {
-		port: 3306,
-		host: 'l9dwvv6j64hlhpul.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-		user: 'dplacwrhqlz1zbqc',
-		password: 'pedoe8xesw36wmx8',
-		database: 'jn5fe1k9jdm48o63'
-	}
+// determine which connection to use
+var connection;
+
+// if we have a jawsdb_url in our environment, use that
+if (process.env.JAWSDB_URL) {
+	connection = new Sequelize(process.env.JAWSDB_URL)
 }
-
-// Select a connection
-var bonafide = source.jawsDB;
-
-// create the MySQL connection with Sequelize
-var sequelize = new Sequelize(bonafide.database, bonafide.user, bonafide.password, {
-	host: bonafide.host,
-	dialect: 'mysql',
-
-	pool: {
-		max: 5,
-		min: 0,
-		idle: 10000
-	},
-
-});
+// otherwise, use our local database
+else {
+	connection = new Sequelize('todo_db', 'root', 'password', {
+		host: 'localhost',
+		dialect: 'mysql',
+		port: '3306'
+	})
+}
 
 // Exports the connection for other files
 module.exports = sequelize;
