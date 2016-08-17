@@ -25,7 +25,7 @@ var xml = sitemap.toString();
 // Express App
 // ====================================
 var app = express();
-var PORT = process.env.PORT || 8000;
+var PORT = process.env.PORT || 8002;
 
 // jwt_secret
 var jwt_secret = process.env.JWT_SECRET || "CodingsCool";

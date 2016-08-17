@@ -53,6 +53,7 @@ module.exports = function(app){
                     // then save the result as the user obj
                     var user = {
                         username: result.dataValues.username,
+                        id: result.dataValues.id,
                         role: result.dataValues.role,
                         instructorName: result.dataValues.instructorName
                     };

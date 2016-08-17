@@ -18,6 +18,7 @@ function stuTest(req, inst) {
 	}
 }
 
+// display overview for students
 module.exports = function(app) {
 	app.get('/overview', function(req, res){
 		// if student

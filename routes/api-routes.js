@@ -1,7 +1,7 @@
 /* Api routes 
  * ========== */
 
- // require express
+// require express
 var jwt = require('jsonwebtoken');
 // require sequelize
 var sequelize = require('../config/connection.js');
@@ -247,6 +247,7 @@ module.exports = function(app) {
     	})
 		})
 	})
+
 // 3: Show comments when user click highlights
 // ===========================================
 	app.get("/api/comments/:id/grab/:line", function(req, res) {
@@ -289,7 +290,7 @@ module.exports = function(app) {
 		})
 	});
 
-//posts comment to database
+// posts comment to database
 app.post("/api/comments/:id/post",function(req,res){
 
 	// save all of the info from the cookie, body, and url
